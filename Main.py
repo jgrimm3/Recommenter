@@ -1,11 +1,11 @@
 import fetch_transcrpts as FT
 import fetch_comments as FC
 
+#youtube api key AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74
 
 
 
-
-url = 'https://www.youtube.com/watch?v=CKZ58bXtQnU'
+url = 'https: // www.youtube.com / watch?v = d0uFNajqTZI'
 Video_ID = url.partition('v=')[2]
 
 
