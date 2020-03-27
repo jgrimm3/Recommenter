@@ -69,14 +69,15 @@ def load_all_comments(url):
 def parse_comments(comments):
     parsed_comments = ""
     words = []
+    for comment in comments:
     # make all words lowercase
-    text = comments[0].lower()
-    # use a regex to make any non alpha numeric chars a delimeter
-    words = re.split(r"[^a-z0-9]", text)
-    # remove spaces and blank lines
-    for word in words:
-        if len(word) >= 1:
-            parsed_comments += " " + word
+        text = comment.lower()
+        # use a regex to make any non alpha numeric chars a delimeter
+        words = re.split(r"[^a-z0-9]", text)
+        # remove spaces and blank lines
+        for word in words:
+            if len(word) >= 1:
+                parsed_comments += " " + word
     return parsed_comments
 
 def export(final_comments, Vid_ID):
