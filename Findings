@@ -1,0 +1,152 @@
+Originally wanted k=4, but not enough correlations:
+
+Generating shingles k= 4
+Sample size 200
+Jaccard comments/8LSw3dkB52kComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/9Ikknmv3DYgComments.txt:  0.002506265664160401
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/nXO2T9rXGEIComments.txt:  0.002506265664160401
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/IuFPD8-0YDYComments.txt:  0.002506265664160401
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/cjzx7io_C5MComments.txt:  0.007556675062972292
+Jaccard comments/cjzx7io_C5MComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/nXO2T9rXGEIComments.txt:  0.002506265664160401
+
+Even if we decrease k to 2,
+
+Generating shingles k= 2
+Sample size 200
+Jaccard comments/8LSw3dkB52kComments.txt to comments/8LSw3dkB52kComments.txt:  0.002506265664160401
+Jaccard comments/8LSw3dkB52kComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/9Ikknmv3DYgComments.txt:  0.012658227848101266
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/IuFPD8-0YDYComments.txt:  0.002506265664160401
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/nXO2T9rXGEIComments.txt:  0.002506265664160401
+Jaccard comments/cjzx7io_C5MComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/IuFPD8-0YDYComments.txt:  0.002506265664160401
+Jaccard comments/cjzx7io_C5MComments.txt to comments/cjzx7io_C5MComments.txt:  0.005025125628140704
+Jaccard comments/cjzx7io_C5MComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/nXO2T9rXGEIComments.txt:  0.002506265664160401
+
+That's marginally better. What about increasing the sample size?
+
+Generating shingles k= 2
+Sample size 400
+Jaccard comments/8LSw3dkB52kComments.txt to comments/8LSw3dkB52kComments.txt:  0.008827238335435058
+Jaccard comments/8LSw3dkB52kComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0012515644555694619
+Jaccard comments/8LSw3dkB52kComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0012515644555694619
+Jaccard comments/8LSw3dkB52kComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/8LSw3dkB52kComments.txt:  0.005025125628140704
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/9Ikknmv3DYgComments.txt:  0.012658227848101266
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/cjzx7io_C5MComments.txt:  0.002506265664160401
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0012515644555694619
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/IuFPD8-0YDYComments.txt:  0.005025125628140704
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/cjzx7io_C5MComments.txt:  0.006289308176100629
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/nXO2T9rXGEIComments.txt:  0.002506265664160401
+Jaccard comments/cjzx7io_C5MComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/9Ikknmv3DYgComments.txt:  0.002506265664160401
+Jaccard comments/cjzx7io_C5MComments.txt to comments/IuFPD8-0YDYComments.txt:  0.002506265664160401
+Jaccard comments/cjzx7io_C5MComments.txt to comments/cjzx7io_C5MComments.txt:  0.023017902813299233
+Jaccard comments/cjzx7io_C5MComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0037641154328732747
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/9Ikknmv3DYgComments.txt:  0.005025125628140704
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/IuFPD8-0YDYComments.txt:  0.002506265664160401
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/cjzx7io_C5MComments.txt:  0.0012515644555694619
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/nXO2T9rXGEIComments.txt:  0.010101010101010102
+
+What about k=1?
+
+Generating shingles k= 1
+Sample size 400
+Jaccard comments/8LSw3dkB52kComments.txt to comments/8LSw3dkB52kComments.txt:  0.06666666666666667
+Jaccard comments/8LSw3dkB52kComments.txt to comments/9Ikknmv3DYgComments.txt:  0.023017902813299233
+Jaccard comments/8LSw3dkB52kComments.txt to comments/IuFPD8-0YDYComments.txt:  0.015228426395939087
+Jaccard comments/8LSw3dkB52kComments.txt to comments/cjzx7io_C5MComments.txt:  0.021711366538952746
+Jaccard comments/8LSw3dkB52kComments.txt to comments/nXO2T9rXGEIComments.txt:  0.011378002528445006
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/8LSw3dkB52kComments.txt:  0.017811704834605598
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/9Ikknmv3DYgComments.txt:  0.06382978723404255
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/IuFPD8-0YDYComments.txt:  0.02040816326530612
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/cjzx7io_C5MComments.txt:  0.02040816326530612
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/nXO2T9rXGEIComments.txt:  0.02564102564102564
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/8LSw3dkB52kComments.txt:  0.01910828025477707
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/9Ikknmv3DYgComments.txt:  0.01910828025477707
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/IuFPD8-0YDYComments.txt:  0.044386422976501305
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/cjzx7io_C5MComments.txt:  0.03492884864165589
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/nXO2T9rXGEIComments.txt:  0.012658227848101266
+Jaccard comments/cjzx7io_C5MComments.txt to comments/8LSw3dkB52kComments.txt:  0.03359173126614987
+Jaccard comments/cjzx7io_C5MComments.txt to comments/9Ikknmv3DYgComments.txt:  0.03761348897535668
+Jaccard comments/cjzx7io_C5MComments.txt to comments/IuFPD8-0YDYComments.txt:  0.023017902813299233
+Jaccard comments/cjzx7io_C5MComments.txt to comments/cjzx7io_C5MComments.txt:  0.07671601615074024
+Jaccard comments/cjzx7io_C5MComments.txt to comments/nXO2T9rXGEIComments.txt:  0.015228426395939087
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/8LSw3dkB52kComments.txt:  0.017811704834605598
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/9Ikknmv3DYgComments.txt:  0.023017902813299233
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/IuFPD8-0YDYComments.txt:  0.01394169835234474
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/cjzx7io_C5MComments.txt:  0.01394169835234474
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/nXO2T9rXGEIComments.txt:  0.04031209362808843
+
+Let's stick to k=2, because look at k=3
+
+Generating shingles k= 3
+Sample size 400
+Jaccard comments/8LSw3dkB52kComments.txt to comments/8LSw3dkB52kComments.txt:  0.007556675062972292
+Jaccard comments/8LSw3dkB52kComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/8LSw3dkB52kComments.txt to comments/cjzx7io_C5MComments.txt:  0.0012515644555694619
+Jaccard comments/8LSw3dkB52kComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/9Ikknmv3DYgComments.txt:  0.015228426395939087
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/cjzx7io_C5MComments.txt:  0.0012515644555694619
+Jaccard comments/9Ikknmv3DYgComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0012515644555694619
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/8LSw3dkB52kComments.txt:  0.0012515644555694619
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0012515644555694619
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0012515644555694619
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/IuFPD8-0YDYComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0012515644555694619
+Jaccard comments/cjzx7io_C5MComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/cjzx7io_C5MComments.txt to comments/cjzx7io_C5MComments.txt:  0.01394169835234474
+Jaccard comments/cjzx7io_C5MComments.txt to comments/nXO2T9rXGEIComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/8LSw3dkB52kComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/9Ikknmv3DYgComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/IuFPD8-0YDYComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/cjzx7io_C5MComments.txt:  0.0
+Jaccard comments/nXO2T9rXGEIComments.txt to comments/nXO2T9rXGEIComments.txt:  0.005025125628140704
+
+
+
