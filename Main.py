@@ -8,12 +8,12 @@ import fetch_comments as FC
 videos = [
     #gaming
     #"https://www.youtube.com/watch?v=zaFdx5KR1Pw", #top games of 2020
-    "https://www.youtube.com/watch?v=IuFPD8-0YDY", #2020 and 2021
-    "https://www.youtube.com/watch?v=8LSw3dkB52k", #disapointing games
+    #"https://www.youtube.com/watch?v=IuFPD8-0YDY", #2020 and 2021
+    #"https://www.youtube.com/watch?v=8LSw3dkB52k", #disapointing games
 
     #cooking
-    "https://www.youtube.com/watch?v=cjzx7io_C5M", #cooking hacks fake cuts
-    "https://www.youtube.com/watch?v=nXO2T9rXGEI", #pizza
+    #"https://www.youtube.com/watch?v=cjzx7io_C5M", #cooking hacks fake cuts
+    #"https://www.youtube.com/watch?v=nXO2T9rXGEI", #pizza
     "https://www.youtube.com/watch?v=9Ikknmv3DYg", #sauce
 
 ]

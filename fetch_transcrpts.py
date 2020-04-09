@@ -54,6 +54,6 @@ def parse_auto(script):
     return parsed_script
 
 def export(final_script, Vid_ID):
-    f = open(Vid_ID + "Transcript.txt", "w+")
+    f = open("data/"+ Vid_ID + "Transcript.txt", "w+")
     f.write(final_script)
     f.close()
