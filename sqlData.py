@@ -16,6 +16,13 @@ def create_videoTable(con, create_sql_statement):
     except Error as e:
         print(e)
 
+#Be sure to sanitize all SQL requests
+def insert_video(con, video_id, url, comments, transcript, upload_date, channel):
+    sql = ''' INSERT INTO videos(video_id,url,comments,transcript,upload_date,channel)
+                 VALUES(?,?,?,?,?,?) '''
+    cur = con.cursor()
+    cur.execute(sql, (video_id, url, comments, transcript, upload_date, channel))
+    return cur.lastrowid
 
 def main():
     db_name = 'videoInfo.db'
@@ -27,12 +34,6 @@ def main():
                                             upload_date text NOT NULL,
                                             channel text NOT NULL
                                         ); """
-    con = connect_db(db_name)
-    if con is not None:
-        #create video table
-        create_videoTable(con, video_Table_Statement)
-    else:
-        print("Error! cannot create the database connection.")
 
-if __name__ == '__main__':
-    main()
+
+
