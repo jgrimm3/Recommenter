@@ -4,6 +4,9 @@ import sqlData as sql
 import os
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
 
 #README
 #This file will be the main data gathering tool, it will crawl youtube links, and populate database info with the folloewing:
@@ -38,6 +41,7 @@ vids = [
     #"https://www.youtube.com/watch?v=nXO2T9rXGEI", #pizza
     "https://www.youtube.com/watch?v=9Ikknmv3DYg", #sauce
 ]
+
 
 #Main
 for url in vids:

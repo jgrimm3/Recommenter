@@ -5,63 +5,46 @@ import re
 import os
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
-from utuby.utuby import youtube
-
-    #fCredits to https://stackoverflow.com/questions/36585824/how-to-get-all-comments-more-than-100-of-a-video-using-youtube-data-api-v3
-def load_comments(match):
-    all_comments = ""
-    for item in match["items"]:
-        comment = item["snippet"]["topLevelComment"]
-        text = comment["snippet"]["textDisplay"]
-        all_comments+= " " + text
-        if 'replies' in item.keys():
-            for reply in item['replies']['comments']:
-                rtext = reply["snippet"]["textDisplay"]
-                all_comments+= " " + text
-
-    return all_comments
-
-def get_comment_threads(youtube, video_id):
-    results = youtube.commentThreads().list(
-        part="snippet",
-        maxResults= 100,
-        order ='relevance',
-        videoId= video_id,
-        textFormat="plainText"
-
-    ).execute()
-    return results
+from utuby.utuby import youtube as yt
 
 
-def download_comments():
-    # Disable OAuthlib's HTTPS verification when running locally.
-    # *DO NOT* leave this option enabled in production.
-    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+def count_comments(id):
+    count = 0
+    request = youtube.videos().list(part="statistics", id=id)
+    response = request.execute()
+    for item in response["items"]:
+        for stat, val in item['statistics'].items():
+            if stat == "commentCount":
+                count = val
+    return count
 
-    api_service_name = "youtube"
-    api_version = "v3"
-    DEVELOPER_KEY = "AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74"
+def get_video_comments(**kwargs):
+    comments = []
+    results = youtube.commentThreads().list(**kwargs).execute()
 
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey=DEVELOPER_KEY)
+    while results:
+        for item in results['items']:
+            comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
+            comments.append(comment)
+            ParentId = item["id"]
 
-    video_id = '9DzSGPad_z4'
-    allComments = ""
-    match = get_comment_threads(youtube, video_id)
-    next_page_token = match["nextPageToken"]
+            if (item['snippet']['totalReplyCount'] > 0):
+                res2 = youtube.comments().list(part='snippet', parentId=ParentId, textFormat='plainText').execute()
+                for item2 in res2['items']:
+                    replyText = item2['snippet']['textDisplay']
+                    comments.append(replyText)
 
-    allComments += load_comments(match)
-    seenPages = []
+        # Check if another page exists
+        if 'nextPageToken' in results:
+            kwargs['pageToken'] = results['nextPageToken']
+            results = youtube.commentThreads().list(**kwargs).execute()
+        else:
+            break
 
-    while next_page_token and next_page_token not in seenPages:
-        seenPages.append(next_page_token)
-        match = get_comment_threads(youtube, video_id)
-        next_page_token = match["nextPageToken"]
-
-        allComments += load_comments(match)
+    return comments
 
 def load_all_comments(url):
-    utube = youtube(url)
+    utube = yt(url)
     print("Loaded" + url)
     raw_comments = utube.comments
     return raw_comments
@@ -90,8 +73,27 @@ def export(final_comments, Vid_ID):
     f.close()
 
 if __name__ == '__main__':
-    comments = download_comments()
+    # Disable OAuthlib's HTTPS verification when running locally.
+    # *DO NOT* leave this option enabled in production.
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+    api_service_name = "youtube"
+    api_version = "v3"
+    DEVELOPER_KEY = "AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74"
 
-    #https://www.youtube.com/watch?v=DbyMpqPZ-K8
-    #https: // www.youtube.com / watch?v = d0uFNajqTZI
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, developerKey=DEVELOPER_KEY)
+
+    video_id = 'oVH3j31pV7Y'
+    #comments = get_video_comments(part='snippet', videoId=video_id, order ='relevance', textFormat='plainText')
+    #print(comments)
+    #print(len(comments))
+    #com = load_all_comments('https://www.youtube.com/watch?v=oVH3j31pV7Y')
+    #print(len(com))
+    #print(com)
+
+
+    video_url = 'https://www.youtube.com/watch?v=oVH3j31pV7Y'
+    video_id = 'oVH3j31pV7Y'
+    print(count_comments('PJZ9KEVbszY'))
+
 
