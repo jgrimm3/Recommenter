@@ -22,7 +22,7 @@ def scrape_vids(count, seed):
             url = 'https://www.youtube.com/watch?v='+id
             if url not in videos:
                 videos.append(url)
-                print(url)
+    return videos
 
 
 
