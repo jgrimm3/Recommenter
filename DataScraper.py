@@ -30,7 +30,8 @@ youtube = googleapiclient.discovery.build(
 
 db_name = 'videoInfo.db'
 
-vids = VC.scrape_vids(count = 30, seed = "" )
+vids = VC.scrape_vids(count = 20, seed = "https://www.youtube.com/watch?v=2pLT-olgUJs" )
+print(vids)
 
 #vids = [
     #gaming
