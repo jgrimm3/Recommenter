@@ -45,13 +45,14 @@ def partial_comments(**kwargs):
         for item in results['items']:
             comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
             comments.append(comment)
-            ParentId = item["id"]
+            #ParentId = item["id"]
 
-            if (item['snippet']['totalReplyCount'] > 0):
-                res2 = youtube.comments().list(part='snippet', parentId=ParentId, textFormat='plainText').execute()
-                for item2 in res2['items']:
-                    replyText = item2['snippet']['textDisplay']
-                    comments.append(replyText)
+            #replies too expensive rn
+            # if (item['snippet']['totalReplyCount'] > 0):
+            #     res2 = youtube.comments().list(part='snippet', parentId=ParentId, textFormat='plainText').execute()
+            #     for item2 in res2['items']:
+            #         replyText = item2['snippet']['textDisplay']
+            #         comments.append(replyText)
 
         # Check if another page exists
         if 'nextPageToken' in results:
@@ -71,7 +72,7 @@ def all_comments(url):
 def parse_comments(comments):
     with open("stop_words.txt", 'r') as f:
          stop_words  = [line.rstrip('\n') for line in f]
-    print(stop_words)
+    #print(stop_words)
 
     parsed_comments = ""
     words = []

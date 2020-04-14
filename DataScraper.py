@@ -32,20 +32,21 @@ db_name = 'videoInfo.db'
 
 vids = [
     #gaming
-    #"https://www.youtube.com/watch?v=zaFdx5KR1Pw", #top games of 2020
-    #"https://www.youtube.com/watch?v=IuFPD8-0YDY", #2020 and 2021
-    #"https://www.youtube.com/watch?v=8LSw3dkB52k", #disapointing games
+    "https://www.youtube.com/watch?v=zaFdx5KR1Pw", #top games of 2020
+    "https://www.youtube.com/watch?v=IuFPD8-0YDY", #2020 and 2021
+    "https://www.youtube.com/watch?v=8LSw3dkB52k", #disapointing games
 
     #cooking
-    #"https://www.youtube.com/watch?v=cjzx7io_C5M", #cooking hacks fake cuts
-    #"https://www.youtube.com/watch?v=nXO2T9rXGEI", #pizza
+    "https://www.youtube.com/watch?v=cjzx7io_C5M", #cooking hacks fake cuts
+    "https://www.youtube.com/watch?v=nXO2T9rXGEI", #pizza
     #"https://www.youtube.com/watch?v=9Ikknmv3DYg", #sauce
-    'https://www.youtube.com/watch?v=IFe6ag34eMg', #cooking 43
-    'https://www.youtube.com/watch?v=h4CyhQqAPpk', #cookies from tastey
-    'https://www.youtube.com/watch?v=17lp_x27_RI', #cookies from bon apetitie
-    'https://www.youtube.com/watch?v=MRsUMyFZi4c', #coronavirus
-    'https://www.youtube.com/watch?v=5DGwOJXSxqg', #coronavirus
-    'https://www.youtube.com/watch?v=4J0d59dd-qM' #coronavirus
+    
+    #'https://www.youtube.com/watch?v=IFe6ag34eMg' #cooking 43
+    #'https://www.youtube.com/watch?v=h4CyhQqAPpk', #cookies from tastey
+    #'https://www.youtube.com/watch?v=17lp_x27_RI', #cookies from bon apetitie
+    #'https://www.youtube.com/watch?v=MRsUMyFZi4c', #coronavirus
+    #'https://www.youtube.com/watch?v=5DGwOJXSxqg', #coronavirus
+    #'https://www.youtube.com/watch?v=4J0d59dd-qM' #coronavirus
 ]
 
 #Main
