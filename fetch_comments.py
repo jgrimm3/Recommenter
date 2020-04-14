@@ -7,27 +7,17 @@ import google_auth_oauthlib.flow
 import googleapiclient.discovery
 from utuby.utuby import youtube as yt
 
-# Disable OAuthlib's HTTPS verification when running locally.
-# *DO NOT* leave this option enabled in production.
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-api_service_name = "youtube"
-api_version = "v3"
-DEVELOPER_KEY = "AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74"
-
-youtube = googleapiclient.discovery.build(
-    api_service_name, api_version, developerKey=DEVELOPER_KEY)
-
-def extract_comments(id, url):
-    count = count_comments(id)
+def extract_comments(id, url, youtube):
+    count = count_comments(id, youtube)
     print(count)
     comments = ""
     if int(count) > 20000:
-        comments = partial_comments(part='snippet', videoId=id, order ='relevance', textFormat='plainText')
+        comments = partial_comments(youtube, part='snippet', videoId=id, order ='relevance', textFormat='plainText')
     else:
         comments = all_comments(url)
     return comments
 
-def count_comments(id):
+def count_comments(id, youtube):
     count = 0
     request = youtube.videos().list(part="statistics", id=id)
     response = request.execute()
@@ -37,7 +27,7 @@ def count_comments(id):
                 count = val
     return count
 
-def partial_comments(**kwargs):
+def partial_comments(youtube, **kwargs):
     comments = []
     results = youtube.commentThreads().list(**kwargs).execute()
 

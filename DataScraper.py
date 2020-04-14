@@ -1,6 +1,7 @@
 import fetch_transcrpts as FT
 import fetch_comments as FC
 import sqlData as sql
+import video_Crawler as VC
 import os
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
@@ -29,16 +30,17 @@ youtube = googleapiclient.discovery.build(
 
 db_name = 'videoInfo.db'
 
+vids = VC.scrape_vids(youtube, count = 100, seed )
 
-vids = [
+#vids = [
     #gaming
-    "https://www.youtube.com/watch?v=zaFdx5KR1Pw", #top games of 2020
-    "https://www.youtube.com/watch?v=IuFPD8-0YDY", #2020 and 2021
-    "https://www.youtube.com/watch?v=8LSw3dkB52k", #disapointing games
+    #"https://www.youtube.com/watch?v=zaFdx5KR1Pw", #top games of 2020
+    #"https://www.youtube.com/watch?v=IuFPD8-0YDY", #2020 and 2021
+    #"https://www.youtube.com/watch?v=8LSw3dkB52k", #disapointing games
 
     #cooking
-    "https://www.youtube.com/watch?v=cjzx7io_C5M", #cooking hacks fake cuts
-    "https://www.youtube.com/watch?v=nXO2T9rXGEI", #pizza
+    #"https://www.youtube.com/watch?v=cjzx7io_C5M", #cooking hacks fake cuts
+    #"https://www.youtube.com/watch?v=nXO2T9rXGEI", #pizza
     #"https://www.youtube.com/watch?v=9Ikknmv3DYg", #sauce
     
     #'https://www.youtube.com/watch?v=IFe6ag34eMg' #cooking 43
@@ -47,7 +49,7 @@ vids = [
     #'https://www.youtube.com/watch?v=MRsUMyFZi4c', #coronavirus
     #'https://www.youtube.com/watch?v=5DGwOJXSxqg', #coronavirus
     #'https://www.youtube.com/watch?v=4J0d59dd-qM' #coronavirus
-]
+#]
 
 #Main
 for url in vids:
@@ -83,7 +85,7 @@ for url in vids:
 
     #Fetch, Parse and Export Comments
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    raw = FC.extract_comments(Video_ID, url)
+    raw = FC.extract_comments(Video_ID, url, youtube)
     final_Comments = FC.parse_comments(raw)
     comments = final_Comments
     #FC.export(final_Comments, Video_ID)   export to text file
