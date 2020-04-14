@@ -16,24 +16,6 @@ def w_shingle(string, w):
     # only item in the set is `words`.
     return [' '.join(words[i:i + w]) for i in range(len(words) - w + 1)]
 
-print('Taking these files as input:', str(sys.argv[1:]))
-
-k = 1
-sample_size = 400
-print('Generating shingles k=', k)
-
-filenames = []
-index = []
-for filename in sys.argv[1:]:
-    with open(filename) as fp:
-        contents = fp.read().replace('\n', ' ')
-        shingles = w_shingle(contents, k)
-        shingles = set(shingles)
-        if (len(shingles)) < sample_size:
-            continue  # don't save, not enough shingles
-        index.append(shingles)
-        filenames.append(filename)
-
 """
 # compare each file to other files
 print('Sample size', sample_size)
@@ -50,18 +32,85 @@ for i in range(len(filenames)):
         print(f"Jaccard {filenames[i]} to {filenames[j]}: ", len(intersection) / len(union))
 """
 
+import math
+from datasketch import MinHash, MinHashLSH, WeightedMinHashGenerator
 
-from datasketch import MinHash, MinHashLSH
+all_words = dict()
+comments = []
+transcripts = []
 
-# Create LSH index
-threshold = 0.3
-lsh = MinHashLSH(threshold=threshold, num_perm=100)
+def calculate_shingle_weight(shingle):
+    weight = 0.0
+    words = shingle.split(' ')
+    for word in words:
+        if word in all_words:
+            entry = all_words[word]
+            weight += math.log2(
+                (len(comments) + len(transcripts))
+                /
+                len(entry['documents'])
+            )
+    return weight
 
-for i in range(len(filenames)):
-    m = MinHash(num_perm=100)
-    for shingle in index[i]:
-        m.update(shingle.encode('utf8'))
-    lsh.insert(filenames[i], m)
+class File:
+    def __init__(self, filename, shingle_size=4):
+        self.filename = filename
+        with open(filename, 'r') as fp:
+            self.contents = fp.read()
+        self.shingles = w_shingle(self.contents, shingle_size)
+        for shingle in self.shingles:
+            words = shingle.split(' ')
+            for word in words:
+                if word in all_words:
+                    all_words[word]['frequency'] += 1
+                    all_words[word]['documents'].add(self.filename)
+                else:
+                    all_words[word] = dict()
+                    all_words[word]['frequency'] = 1
+                    all_words[word]['documents'] = set()
+                    all_words[word]['documents'].add(self.filename)
+        self.minhash = None
 
-result = lsh.query(m)
-print("Approximate neighbours with Jaccard similarity >", threshold, "for", filenames[i], result)
+    def get_n_best_shingles(self, n=200):
+        ret = [(calculate_shingle_weight(shingle), shingle) for shingle in self.shingles]
+        ret = sorted(ret, key=lambda x: x[0], reverse=True)
+        ret = [shingle[1] for shingle in ret]
+        return ret[:n]
+
+    def generate_minhash(self):
+        self.minhash = MinHash(num_perm=300)
+        for shingle in self.get_n_best_shingles(n=300):
+            self.minhash.update(shingle.encode('utf8'))
+
+
+comments.append(File('data/8LSw3dkB52kComments.txt', shingle_size=2))
+comments.append(File('data/9Ikknmv3DYgComments.txt', shingle_size=2))
+comments.append(File('data/IuFPD8-0YDYComments.txt', shingle_size=2))
+comments.append(File('data/cjzx7io_C5MComments.txt', shingle_size=2))
+comments.append(File('data/nXO2T9rXGEIComments.txt', shingle_size=2))
+
+transcripts.append(File('data/8LSw3dkB52kTranscript.txt', shingle_size=4))
+transcripts.append(File('data/9Ikknmv3DYgTranscript.txt', shingle_size=4))
+transcripts.append(File('data/IuFPD8-0YDYTranscript.txt', shingle_size=4))
+transcripts.append(File('data/cjzx7io_C5MTranscript.txt', shingle_size=4))
+transcripts.append(File('data/nXO2T9rXGEITranscript.txt', shingle_size=4))
+
+comment_lsh = MinHashLSH(threshold=0.001, num_perm=300)
+for comment in comments:
+    comment.generate_minhash()
+    comment_lsh.insert(comment.filename, comment.minhash)
+
+transcripts_lsh = MinHashLSH(threshold=0.001, num_perm=300)
+for transcript in transcripts:
+    transcript.generate_minhash()
+    transcripts_lsh.insert(transcript.filename, transcript.minhash)
+
+
+for video_id in range(len(comments)):
+    comment_result = comment_lsh.query(comments[video_id].minhash)
+    transcript_result = transcripts_lsh.query(transcripts[video_id].minhash)
+
+    print(comments[video_id].filename, comments[video_id].get_n_best_shingles(n=10))
+    print(comments[video_id].filename, comment_result)
+    print(comments[video_id].filename, transcripts[video_id].get_n_best_shingles(n=10))
+    print(comments[video_id].filename, transcript_result)
