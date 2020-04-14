@@ -21,7 +21,7 @@ def extract_comments(id, url):
     count = count_comments(id)
     print(count)
     comments = ""
-    if int(count) > 10000:
+    if int(count) > 20000:
         comments = partial_comments(part='snippet', videoId=id, order ='relevance', textFormat='plainText')
     else:
         comments = all_comments(url)
