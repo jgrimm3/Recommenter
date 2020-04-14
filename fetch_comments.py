@@ -7,7 +7,25 @@ import google_auth_oauthlib.flow
 import googleapiclient.discovery
 from utuby.utuby import youtube as yt
 
+# Disable OAuthlib's HTTPS verification when running locally.
+# *DO NOT* leave this option enabled in production.
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+api_service_name = "youtube"
+api_version = "v3"
+DEVELOPER_KEY = "AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74"
 
+youtube = googleapiclient.discovery.build(
+    api_service_name, api_version, developerKey=DEVELOPER_KEY)
+
+def extract_comments(id, url):
+    count = count_comments(id)
+    print(count)
+    comments = ""
+    if count >= 10000:
+        comments = partial_comments(part='snippet', videoId=id, order ='relevance', textFormat='plainText')
+    else:
+        comments = all_comments(url)
+    return comments
 def count_comments(id):
     count = 0
     request = youtube.videos().list(part="statistics", id=id)
@@ -18,7 +36,7 @@ def count_comments(id):
                 count = val
     return count
 
-def get_video_comments(**kwargs):
+def partial_comments(**kwargs):
     comments = []
     results = youtube.commentThreads().list(**kwargs).execute()
 
@@ -43,7 +61,7 @@ def get_video_comments(**kwargs):
 
     return comments
 
-def load_all_comments(url):
+def all_comments(url):
     utube = yt(url)
     print("Loaded" + url)
     raw_comments = utube.comments
@@ -71,29 +89,3 @@ def export(final_comments, Vid_ID):
     f = open("data/"+ Vid_ID + "Comments.txt", "w+")
     f.write(final_comments)
     f.close()
-
-if __name__ == '__main__':
-    # Disable OAuthlib's HTTPS verification when running locally.
-    # *DO NOT* leave this option enabled in production.
-    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-    api_service_name = "youtube"
-    api_version = "v3"
-    DEVELOPER_KEY = "AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74"
-
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey=DEVELOPER_KEY)
-
-    video_id = 'oVH3j31pV7Y'
-    #comments = get_video_comments(part='snippet', videoId=video_id, order ='relevance', textFormat='plainText')
-    #print(comments)
-    #print(len(comments))
-    #com = load_all_comments('https://www.youtube.com/watch?v=oVH3j31pV7Y')
-    #print(len(com))
-    #print(com)
-
-
-    video_url = 'https://www.youtube.com/watch?v=oVH3j31pV7Y'
-    video_id = 'oVH3j31pV7Y'
-    print(count_comments('PJZ9KEVbszY'))
-
-

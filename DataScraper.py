@@ -39,9 +39,14 @@ vids = [
     #cooking
     #"https://www.youtube.com/watch?v=cjzx7io_C5M", #cooking hacks fake cuts
     #"https://www.youtube.com/watch?v=nXO2T9rXGEI", #pizza
-    "https://www.youtube.com/watch?v=9Ikknmv3DYg", #sauce
+    #"https://www.youtube.com/watch?v=9Ikknmv3DYg", #sauce
+    'https://www.youtube.com/watch?v=IFe6ag34eMg', #cooking 43
+    'https://www.youtube.com/watch?v=h4CyhQqAPpk', #cookies from tastey
+    'https://www.youtube.com/watch?v=17lp_x27_RI', #cookies from bon apetitie
+    'https://www.youtube.com/watch?v=MRsUMyFZi4c', #coronavirus
+    'https://www.youtube.com/watch?v=5DGwOJXSxqg', #coronavirus
+    'https://www.youtube.com/watch?v=4J0d59dd-qM' #coronavirus
 ]
-
 
 #Main
 for url in vids:
@@ -77,7 +82,7 @@ for url in vids:
 
     #Fetch, Parse and Export Comments
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    raw = FC.load_all_comments(url)
+    raw = FC.extract_comments(Video_ID, url)
     final_Comments = FC.parse_comments(raw)
     comments = final_Comments
     #FC.export(final_Comments, Video_ID)   export to text file
