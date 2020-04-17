@@ -1,0 +1,632 @@
+C:\Users\serza\AppData\Local\Microsoft\WindowsApps\ubuntu1804.exe run "export PYTHONDONTWRITEBYTECODE=1 && export IDE_PROJECT_ROOTS=/mnt/c/Users/serza/Documents/Recommenter && export PYTHONUNBUFFERED=1 && export IPYTHONENABLE=True && export LIBRARY_ROOTS=/mnt/c/Users/serza/.PyCharm2019.3/system/remote_sources/1980844961/201545291:/mnt/c/Users/serza/.PyCharm2019.3/system/remote_sources/1980844961/-1171821208:/mnt/c/Users/serza/.PyCharm2019.3/system/remote_sources/1980844961/-2099632911:/mnt/c/Users/serza/.PyCharm2019.3/system/python_stubs/1980844961:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/python-skeletons:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/typeshed/stdlib/3:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/typeshed/stdlib/2and3:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/typeshed/third_party/3:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/typeshed/third_party/2and3 && export PYCHARM_DISPLAY_PORT=63342 && export PYTHONIOENCODING=UTF-8 && export PYCHARM_HOSTED=1 && export PYDEVD_LOAD_VALUES_ASYNC=True && export PYTHONPATH=/mnt/c/Users/serza/Documents/Recommenter:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/pycharm_matplotlib_backend:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/pycharm_display:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/third_party/thriftpy:/mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/pydev:/mnt/c/Users/serza/.PyCharm2019.3/system/cythonExtensions:/mnt/c/Users/serza/Documents/Recommenter && cd /mnt/c/Users/serza/Documents/Recommenter && /usr/bin/python3 /mnt/c/Users/serza/AppData/Local/JetBrains/Toolbox/apps/PyCharm-P/ch-0/193.6494.30/plugins/python/helpers/pydev/pydevd.py --multiproc --qt-support=auto --client 127.0.0.1 --port 64100 --file /mnt/c/Users/serza/Documents/Recommenter/simular.py comments/8LSw3dkB52kComments.txt comments/9Ikknmv3DYgComments.txt comments/IuFPD8-0YDYComments.txt comments/cjzx7io_C5MComments.txt comments/nXO2T9rXGEIComments.txt comments/zaFdx5KR1PwComments.txt"
+pydev debugger: process 89 is connecting
+
+Connected to pydev debugger (build 193.6494.30)
+Inserted 9Ikknmv3DYg into memory
+Inserted IFe6ag34eMg into memory
+Inserted h4CyhQqAPpk into memory
+Inserted 17lp_x27_RI into memory
+Inserted MRsUMyFZi4c into memory
+Inserted 5DGwOJXSxqg into memory
+Inserted 4J0d59dd-qM into memory
+Inserted zaFdx5KR1Pw into memory
+Inserted IuFPD8-0YDY into memory
+Inserted 8LSw3dkB52k into memory
+Inserted cjzx7io_C5M into memory
+Inserted nXO2T9rXGEI into memory
+Inserted j64BBgBGNIU into memory
+Inserted uJynle14rSE into memory
+Inserted I9nG-G4B5Bs into memory
+Inserted Th97oQ4eF9U into memory
+Inserted tXWh-dowiLg into memory
+Inserted ZveSMkUr0l0 into memory
+Inserted Byn9mPPZrtk into memory
+Inserted V4sWpLJcQoU into memory
+Inserted 4CkVdu4z1HA into memory
+Inserted 2MoGxae-zyo into memory
+Inserted p-byEw_tKa8 into memory
+Inserted _3NCDf7pplc into memory
+Inserted AQ-zcv_viAo into memory
+Inserted 2pLT-olgUJs into memory
+Inserted WE8kILaQvWw into memory
+Inserted eUtHIueatxU into memory
+Inserted y-nbg7vNkcY into memory
+Inserted 4Zne-5V30xg into memory
+Inserted cIuiQyfKBTg into memory
+Inserted EUruBzhv7Kk into memory
+Inserted Zh-ik4RD5hU into memory
+Inserted xBD9QDqlBBo into memory
+Inserted IlU-zDU6aQ0 into memory
+Inserted RusVU_XSzTk into memory
+Inserted YTUMDBOobTw into memory
+Inserted Z_RM77sWCUE into memory
+Inserted 0NbBjNiw4tk into memory
+Inserted L2suMPiuog4 into memory
+Inserted k6TWO-ESC6A into memory
+Inserted ElulEJruhRQ into memory
+Inserted t8o5W425uhw into memory
+Inserted iVpXrbZ4bnU into memory
+Inserted 7UNLgPIiWAg into memory
+Inserted L5lfurZ2k8A into memory
+Inserted i9x4HFUFVIE into memory
+Inserted AfCLZPppwL0 into memory
+Inserted ksG2jeKZqVM into memory
+Inserted CMllPAuDjNQ into memory
+Inserted FB2UE_SWIXY into memory
+Inserted 7kpDA8wgOrU into memory
+Inserted 3qYykmHx5gc into memory
+Inserted zLVMY33rZis into memory
+Inserted xe55HVhPrlo into memory
+Inserted wFMorRyhqy8 into memory
+Inserted UW39eAlznco into memory
+Inserted XOyXN9SgTl4 into memory
+Inserted CPW8q7_bOZU into memory
+Inserted 94LNBOFEadA into memory
+Inserted 1zwko8D5lRw into memory
+Inserted 4Sk-9hqf8vY into memory
+Inserted J5wqeUewAXk into memory
+Generating minhash for 9Ikknmv3DYg
+Generating minhash for IFe6ag34eMg
+Generating minhash for h4CyhQqAPpk
+Generating minhash for 17lp_x27_RI
+Generating minhash for MRsUMyFZi4c
+Generating minhash for 5DGwOJXSxqg
+Generating minhash for 4J0d59dd-qM
+Generating minhash for zaFdx5KR1Pw
+Generating minhash for IuFPD8-0YDY
+Generating minhash for 8LSw3dkB52k
+Generating minhash for cjzx7io_C5M
+Generating minhash for nXO2T9rXGEI
+Generating minhash for j64BBgBGNIU
+Generating minhash for uJynle14rSE
+Generating minhash for I9nG-G4B5Bs
+Generating minhash for Th97oQ4eF9U
+Generating minhash for tXWh-dowiLg
+Generating minhash for ZveSMkUr0l0
+Generating minhash for Byn9mPPZrtk
+Generating minhash for V4sWpLJcQoU
+Generating minhash for 4CkVdu4z1HA
+Generating minhash for 2MoGxae-zyo
+Generating minhash for p-byEw_tKa8
+Generating minhash for _3NCDf7pplc
+Generating minhash for AQ-zcv_viAo
+Generating minhash for 2pLT-olgUJs
+Generating minhash for WE8kILaQvWw
+Generating minhash for eUtHIueatxU
+Generating minhash for y-nbg7vNkcY
+Generating minhash for 4Zne-5V30xg
+Generating minhash for cIuiQyfKBTg
+Generating minhash for EUruBzhv7Kk
+Generating minhash for Zh-ik4RD5hU
+Generating minhash for xBD9QDqlBBo
+Generating minhash for IlU-zDU6aQ0
+Generating minhash for RusVU_XSzTk
+Generating minhash for YTUMDBOobTw
+Generating minhash for Z_RM77sWCUE
+Generating minhash for 0NbBjNiw4tk
+Generating minhash for L2suMPiuog4
+Generating minhash for k6TWO-ESC6A
+Generating minhash for ElulEJruhRQ
+Generating minhash for t8o5W425uhw
+Generating minhash for iVpXrbZ4bnU
+Generating minhash for 7UNLgPIiWAg
+Generating minhash for L5lfurZ2k8A
+Generating minhash for i9x4HFUFVIE
+Generating minhash for AfCLZPppwL0
+Generating minhash for ksG2jeKZqVM
+Generating minhash for CMllPAuDjNQ
+Generating minhash for FB2UE_SWIXY
+Generating minhash for 7kpDA8wgOrU
+Generating minhash for 3qYykmHx5gc
+Generating minhash for zLVMY33rZis
+Generating minhash for xe55HVhPrlo
+Generating minhash for wFMorRyhqy8
+Generating minhash for UW39eAlznco
+Generating minhash for XOyXN9SgTl4
+Generating minhash for CPW8q7_bOZU
+Generating minhash for 94LNBOFEadA
+Generating minhash for 1zwko8D5lRw
+Generating minhash for 4Sk-9hqf8vY
+Generating minhash for J5wqeUewAXk
+Generating minhash for 9Ikknmv3DYg
+Generating minhash for IFe6ag34eMg
+Generating minhash for h4CyhQqAPpk
+Generating minhash for 17lp_x27_RI
+Generating minhash for MRsUMyFZi4c
+Generating minhash for 5DGwOJXSxqg
+Generating minhash for 4J0d59dd-qM
+Generating minhash for zaFdx5KR1Pw
+Generating minhash for IuFPD8-0YDY
+Generating minhash for 8LSw3dkB52k
+Generating minhash for cjzx7io_C5M
+Generating minhash for nXO2T9rXGEI
+Generating minhash for j64BBgBGNIU
+Generating minhash for uJynle14rSE
+Generating minhash for I9nG-G4B5Bs
+Generating minhash for Th97oQ4eF9U
+Generating minhash for tXWh-dowiLg
+Generating minhash for ZveSMkUr0l0
+Generating minhash for Byn9mPPZrtk
+Generating minhash for V4sWpLJcQoU
+Generating minhash for 4CkVdu4z1HA
+Generating minhash for 2MoGxae-zyo
+Generating minhash for p-byEw_tKa8
+Generating minhash for _3NCDf7pplc
+Generating minhash for AQ-zcv_viAo
+Generating minhash for 2pLT-olgUJs
+Generating minhash for WE8kILaQvWw
+Generating minhash for eUtHIueatxU
+Generating minhash for y-nbg7vNkcY
+Generating minhash for 4Zne-5V30xg
+Generating minhash for cIuiQyfKBTg
+Generating minhash for EUruBzhv7Kk
+Generating minhash for Zh-ik4RD5hU
+Generating minhash for xBD9QDqlBBo
+Generating minhash for IlU-zDU6aQ0
+Generating minhash for RusVU_XSzTk
+Generating minhash for YTUMDBOobTw
+Generating minhash for Z_RM77sWCUE
+Generating minhash for 0NbBjNiw4tk
+Generating minhash for L2suMPiuog4
+Generating minhash for k6TWO-ESC6A
+Generating minhash for ElulEJruhRQ
+Generating minhash for t8o5W425uhw
+Generating minhash for iVpXrbZ4bnU
+Generating minhash for 7UNLgPIiWAg
+Generating minhash for L5lfurZ2k8A
+Generating minhash for i9x4HFUFVIE
+Generating minhash for AfCLZPppwL0
+Generating minhash for ksG2jeKZqVM
+Generating minhash for CMllPAuDjNQ
+Generating minhash for FB2UE_SWIXY
+Generating minhash for 7kpDA8wgOrU
+Generating minhash for 3qYykmHx5gc
+Generating minhash for zLVMY33rZis
+Generating minhash for xe55HVhPrlo
+Generating minhash for wFMorRyhqy8
+Generating minhash for UW39eAlznco
+Generating minhash for XOyXN9SgTl4
+Generating minhash for CPW8q7_bOZU
+Generating minhash for 94LNBOFEadA
+Generating minhash for 1zwko8D5lRw
+Generating minhash for 4Sk-9hqf8vY
+Generating minhash for J5wqeUewAXk
+9Ikknmv3DYg ['9Ikknmv3DYg']
+9Ikknmv3DYg ['9Ikknmv3DYg']
+IFe6ag34eMg ['IFe6ag34eMg']
+IFe6ag34eMg ['IFe6ag34eMg']
+h4CyhQqAPpk ['h4CyhQqAPpk']
+h4CyhQqAPpk ['h4CyhQqAPpk', '17lp_x27_RI']
+h4CyhQqAPpk h4CyhQqAPpk 1.0
+h4CyhQqAPpk 17lp_x27_RI 0.0025
+17lp_x27_RI ['17lp_x27_RI']
+17lp_x27_RI ['h4CyhQqAPpk', '17lp_x27_RI']
+17lp_x27_RI h4CyhQqAPpk 0.0025
+17lp_x27_RI 17lp_x27_RI 1.0
+MRsUMyFZi4c ['MRsUMyFZi4c']
+MRsUMyFZi4c ['MRsUMyFZi4c']
+5DGwOJXSxqg ['5DGwOJXSxqg']
+5DGwOJXSxqg ['5DGwOJXSxqg']
+4J0d59dd-qM ['4J0d59dd-qM']
+4J0d59dd-qM ['4J0d59dd-qM']
+zaFdx5KR1Pw ['zaFdx5KR1Pw']
+zaFdx5KR1Pw ['zaFdx5KR1Pw', '8LSw3dkB52k']
+zaFdx5KR1Pw zaFdx5KR1Pw 1.0
+zaFdx5KR1Pw 8LSw3dkB52k 0.0125
+IuFPD8-0YDY ['IuFPD8-0YDY']
+IuFPD8-0YDY ['IuFPD8-0YDY']
+8LSw3dkB52k ['8LSw3dkB52k']
+8LSw3dkB52k ['zaFdx5KR1Pw', '8LSw3dkB52k', 'wFMorRyhqy8']
+8LSw3dkB52k zaFdx5KR1Pw 0.0125
+8LSw3dkB52k 8LSw3dkB52k 1.0
+8LSw3dkB52k wFMorRyhqy8 0.0025
+cjzx7io_C5M ['cjzx7io_C5M']
+cjzx7io_C5M ['cjzx7io_C5M', 'V4sWpLJcQoU']
+cjzx7io_C5M cjzx7io_C5M 1.0
+cjzx7io_C5M V4sWpLJcQoU 0.0025
+nXO2T9rXGEI ['nXO2T9rXGEI']
+nXO2T9rXGEI ['nXO2T9rXGEI']
+j64BBgBGNIU ['j64BBgBGNIU', 'p-byEw_tKa8', '2pLT-olgUJs', 'uJynle14rSE', 'Th97oQ4eF9U', 'ZveSMkUr0l0']
+j64BBgBGNIU ['4CkVdu4z1HA', 'ZveSMkUr0l0', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'V4sWpLJcQoU', 'p-byEw_tKa8', 'Byn9mPPZrtk', '2pLT-olgUJs', 'AQ-zcv_viAo', 'Th97oQ4eF9U', 'eUtHIueatxU', 'I9nG-G4B5Bs']
+j64BBgBGNIU j64BBgBGNIU 1.0
+j64BBgBGNIU p-byEw_tKa8 0.0075
+j64BBgBGNIU 2pLT-olgUJs 0.01
+j64BBgBGNIU uJynle14rSE 0.0025
+j64BBgBGNIU Th97oQ4eF9U 0.005
+j64BBgBGNIU ZveSMkUr0l0 0.005
+j64BBgBGNIU 4CkVdu4z1HA 0.0075
+j64BBgBGNIU ZveSMkUr0l0 0.0075
+j64BBgBGNIU cIuiQyfKBTg 0.0025
+j64BBgBGNIU _3NCDf7pplc 0.005
+j64BBgBGNIU j64BBgBGNIU 1.0
+j64BBgBGNIU V4sWpLJcQoU 0.01
+j64BBgBGNIU p-byEw_tKa8 0.0025
+j64BBgBGNIU Byn9mPPZrtk 0.0075
+j64BBgBGNIU 2pLT-olgUJs 0.015
+j64BBgBGNIU AQ-zcv_viAo 0.0025
+j64BBgBGNIU Th97oQ4eF9U 0.0125
+j64BBgBGNIU eUtHIueatxU 0.005
+j64BBgBGNIU I9nG-G4B5Bs 0.01
+uJynle14rSE ['2pLT-olgUJs', 'uJynle14rSE', 'j64BBgBGNIU', 'p-byEw_tKa8']
+uJynle14rSE ['uJynle14rSE', 'EUruBzhv7Kk', 'p-byEw_tKa8', 'Th97oQ4eF9U']
+uJynle14rSE 2pLT-olgUJs 0.0025
+uJynle14rSE uJynle14rSE 1.0
+uJynle14rSE j64BBgBGNIU 0.0025
+uJynle14rSE p-byEw_tKa8 0.0025
+uJynle14rSE uJynle14rSE 1.0
+uJynle14rSE EUruBzhv7Kk 0.015
+uJynle14rSE p-byEw_tKa8 0.01
+uJynle14rSE Th97oQ4eF9U 0.005
+I9nG-G4B5Bs ['I9nG-G4B5Bs']
+I9nG-G4B5Bs ['4CkVdu4z1HA', 'ZveSMkUr0l0', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'tXWh-dowiLg', 'V4sWpLJcQoU', 'Byn9mPPZrtk', '2pLT-olgUJs', 'AQ-zcv_viAo', '2MoGxae-zyo', 'Th97oQ4eF9U', 'eUtHIueatxU', 'I9nG-G4B5Bs']
+I9nG-G4B5Bs 4CkVdu4z1HA 0.0075
+I9nG-G4B5Bs ZveSMkUr0l0 0.005
+I9nG-G4B5Bs cIuiQyfKBTg 0.0025
+I9nG-G4B5Bs _3NCDf7pplc 0.005
+I9nG-G4B5Bs j64BBgBGNIU 0.01
+I9nG-G4B5Bs tXWh-dowiLg 0.0025
+I9nG-G4B5Bs V4sWpLJcQoU 0.005
+I9nG-G4B5Bs Byn9mPPZrtk 0.0225
+I9nG-G4B5Bs 2pLT-olgUJs 0.025
+I9nG-G4B5Bs AQ-zcv_viAo 0.0025
+I9nG-G4B5Bs 2MoGxae-zyo 0.02
+I9nG-G4B5Bs Th97oQ4eF9U 0.015
+I9nG-G4B5Bs eUtHIueatxU 0.01
+I9nG-G4B5Bs I9nG-G4B5Bs 1.0
+Th97oQ4eF9U ['j64BBgBGNIU', 'p-byEw_tKa8', 'Th97oQ4eF9U', 'ZveSMkUr0l0', 'EUruBzhv7Kk']
+Th97oQ4eF9U ['4CkVdu4z1HA', 'ZveSMkUr0l0', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'tXWh-dowiLg', 'V4sWpLJcQoU', 'p-byEw_tKa8', 'Byn9mPPZrtk', '2pLT-olgUJs', 'uJynle14rSE', 'Th97oQ4eF9U', 'eUtHIueatxU', 'I9nG-G4B5Bs']
+Th97oQ4eF9U j64BBgBGNIU 0.005
+Th97oQ4eF9U p-byEw_tKa8 0.01
+Th97oQ4eF9U Th97oQ4eF9U 1.0
+Th97oQ4eF9U ZveSMkUr0l0 0.01
+Th97oQ4eF9U EUruBzhv7Kk 0.0025
+Th97oQ4eF9U 4CkVdu4z1HA 0.01
+Th97oQ4eF9U ZveSMkUr0l0 0.0175
+Th97oQ4eF9U cIuiQyfKBTg 0.0025
+Th97oQ4eF9U _3NCDf7pplc 0.005
+Th97oQ4eF9U j64BBgBGNIU 0.0125
+Th97oQ4eF9U tXWh-dowiLg 0.0025
+Th97oQ4eF9U V4sWpLJcQoU 0.005
+Th97oQ4eF9U p-byEw_tKa8 0.0025
+Th97oQ4eF9U Byn9mPPZrtk 0.0025
+Th97oQ4eF9U 2pLT-olgUJs 0.005
+Th97oQ4eF9U uJynle14rSE 0.005
+Th97oQ4eF9U Th97oQ4eF9U 1.0
+Th97oQ4eF9U eUtHIueatxU 0.0075
+Th97oQ4eF9U I9nG-G4B5Bs 0.015
+tXWh-dowiLg ['tXWh-dowiLg']
+tXWh-dowiLg ['ZveSMkUr0l0', 'tXWh-dowiLg', 'Byn9mPPZrtk', 'Th97oQ4eF9U', 'eUtHIueatxU', 'I9nG-G4B5Bs']
+tXWh-dowiLg ZveSMkUr0l0 0.0025
+tXWh-dowiLg tXWh-dowiLg 1.0
+tXWh-dowiLg Byn9mPPZrtk 0.0025
+tXWh-dowiLg Th97oQ4eF9U 0.0025
+tXWh-dowiLg eUtHIueatxU 0.0075
+tXWh-dowiLg I9nG-G4B5Bs 0.0025
+ZveSMkUr0l0 ['4CkVdu4z1HA', 'j64BBgBGNIU', 'p-byEw_tKa8', 'Th97oQ4eF9U', 'ZveSMkUr0l0', 'EUruBzhv7Kk']
+ZveSMkUr0l0 ['4CkVdu4z1HA', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'tXWh-dowiLg', 'V4sWpLJcQoU', 'p-byEw_tKa8', 'Byn9mPPZrtk', 'EUruBzhv7Kk', 'Th97oQ4eF9U', '2pLT-olgUJs', '2MoGxae-zyo', 'ZveSMkUr0l0', 'I9nG-G4B5Bs', 'eUtHIueatxU', 'WE8kILaQvWw', '4Zne-5V30xg']
+ZveSMkUr0l0 4CkVdu4z1HA 0.0075
+ZveSMkUr0l0 j64BBgBGNIU 0.005
+ZveSMkUr0l0 p-byEw_tKa8 0.0275
+ZveSMkUr0l0 Th97oQ4eF9U 0.01
+ZveSMkUr0l0 ZveSMkUr0l0 1.0
+ZveSMkUr0l0 EUruBzhv7Kk 0.0175
+ZveSMkUr0l0 4CkVdu4z1HA 0.0175
+ZveSMkUr0l0 cIuiQyfKBTg 0.015
+ZveSMkUr0l0 _3NCDf7pplc 0.005
+ZveSMkUr0l0 j64BBgBGNIU 0.0075
+ZveSMkUr0l0 tXWh-dowiLg 0.0025
+ZveSMkUr0l0 V4sWpLJcQoU 0.005
+ZveSMkUr0l0 p-byEw_tKa8 0.0025
+ZveSMkUr0l0 Byn9mPPZrtk 0.0225
+ZveSMkUr0l0 EUruBzhv7Kk 0.0025
+ZveSMkUr0l0 Th97oQ4eF9U 0.0175
+ZveSMkUr0l0 2pLT-olgUJs 0.025
+ZveSMkUr0l0 2MoGxae-zyo 0.0025
+ZveSMkUr0l0 ZveSMkUr0l0 1.0
+ZveSMkUr0l0 I9nG-G4B5Bs 0.005
+ZveSMkUr0l0 eUtHIueatxU 0.0125
+ZveSMkUr0l0 WE8kILaQvWw 0.0025
+ZveSMkUr0l0 4Zne-5V30xg 0.0025
+Byn9mPPZrtk ['Byn9mPPZrtk', 'AQ-zcv_viAo']
+Byn9mPPZrtk ['4CkVdu4z1HA', 'cIuiQyfKBTg', 'j64BBgBGNIU', 'tXWh-dowiLg', 'p-byEw_tKa8', 'V4sWpLJcQoU', '4Zne-5V30xg', 'Byn9mPPZrtk', 'Th97oQ4eF9U', '2pLT-olgUJs', 'AQ-zcv_viAo', '2MoGxae-zyo', 'ZveSMkUr0l0', 'eUtHIueatxU', 'WE8kILaQvWw', 'I9nG-G4B5Bs']
+Byn9mPPZrtk Byn9mPPZrtk 1.0
+Byn9mPPZrtk AQ-zcv_viAo 0.01
+Byn9mPPZrtk 4CkVdu4z1HA 0.0025
+Byn9mPPZrtk cIuiQyfKBTg 0.0025
+Byn9mPPZrtk j64BBgBGNIU 0.0075
+Byn9mPPZrtk tXWh-dowiLg 0.0025
+Byn9mPPZrtk p-byEw_tKa8 0.0025
+Byn9mPPZrtk V4sWpLJcQoU 0.0025
+Byn9mPPZrtk 4Zne-5V30xg 0.005
+Byn9mPPZrtk Byn9mPPZrtk 1.0
+Byn9mPPZrtk Th97oQ4eF9U 0.0025
+Byn9mPPZrtk 2pLT-olgUJs 0.005
+Byn9mPPZrtk AQ-zcv_viAo 0.0075
+Byn9mPPZrtk 2MoGxae-zyo 0.0025
+Byn9mPPZrtk ZveSMkUr0l0 0.0225
+Byn9mPPZrtk eUtHIueatxU 0.0025
+Byn9mPPZrtk WE8kILaQvWw 0.0075
+Byn9mPPZrtk I9nG-G4B5Bs 0.0225
+V4sWpLJcQoU ['V4sWpLJcQoU']
+V4sWpLJcQoU ['4CkVdu4z1HA', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'V4sWpLJcQoU', 'Byn9mPPZrtk', 'eUtHIueatxU', '2pLT-olgUJs', 'AQ-zcv_viAo', 'cjzx7io_C5M', '2MoGxae-zyo', 'Th97oQ4eF9U', 'ZveSMkUr0l0', 'I9nG-G4B5Bs']
+V4sWpLJcQoU 4CkVdu4z1HA 0.01
+V4sWpLJcQoU cIuiQyfKBTg 0.0025
+V4sWpLJcQoU _3NCDf7pplc 0.0025
+V4sWpLJcQoU j64BBgBGNIU 0.01
+V4sWpLJcQoU V4sWpLJcQoU 1.0
+V4sWpLJcQoU Byn9mPPZrtk 0.0025
+V4sWpLJcQoU eUtHIueatxU 0.0125
+V4sWpLJcQoU 2pLT-olgUJs 0.0075
+V4sWpLJcQoU AQ-zcv_viAo 0.005
+V4sWpLJcQoU cjzx7io_C5M 0.0025
+V4sWpLJcQoU 2MoGxae-zyo 0.0025
+V4sWpLJcQoU Th97oQ4eF9U 0.005
+V4sWpLJcQoU ZveSMkUr0l0 0.005
+V4sWpLJcQoU I9nG-G4B5Bs 0.005
+4CkVdu4z1HA ['4CkVdu4z1HA', 'ZveSMkUr0l0']
+4CkVdu4z1HA ['4CkVdu4z1HA', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'V4sWpLJcQoU', 'Byn9mPPZrtk', 'eUtHIueatxU', '2pLT-olgUJs', 'AQ-zcv_viAo', '2MoGxae-zyo', 'Th97oQ4eF9U', 'ZveSMkUr0l0', 'I9nG-G4B5Bs']
+4CkVdu4z1HA 4CkVdu4z1HA 1.0
+4CkVdu4z1HA ZveSMkUr0l0 0.0075
+4CkVdu4z1HA 4CkVdu4z1HA 1.0
+4CkVdu4z1HA cIuiQyfKBTg 0.0025
+4CkVdu4z1HA _3NCDf7pplc 0.0075
+4CkVdu4z1HA j64BBgBGNIU 0.0075
+4CkVdu4z1HA V4sWpLJcQoU 0.01
+4CkVdu4z1HA Byn9mPPZrtk 0.0025
+4CkVdu4z1HA eUtHIueatxU 0.0075
+4CkVdu4z1HA 2pLT-olgUJs 0.02
+4CkVdu4z1HA AQ-zcv_viAo 0.0075
+4CkVdu4z1HA 2MoGxae-zyo 0.0025
+4CkVdu4z1HA Th97oQ4eF9U 0.01
+4CkVdu4z1HA ZveSMkUr0l0 0.0175
+4CkVdu4z1HA I9nG-G4B5Bs 0.0075
+2MoGxae-zyo ['2MoGxae-zyo']
+2MoGxae-zyo ['4CkVdu4z1HA', 'cIuiQyfKBTg', '_3NCDf7pplc', 'V4sWpLJcQoU', 'p-byEw_tKa8', 'Byn9mPPZrtk', '2pLT-olgUJs', '2MoGxae-zyo', 'ZveSMkUr0l0', 'eUtHIueatxU', 'I9nG-G4B5Bs']
+2MoGxae-zyo 4CkVdu4z1HA 0.0025
+2MoGxae-zyo cIuiQyfKBTg 0.0025
+2MoGxae-zyo _3NCDf7pplc 0.0025
+2MoGxae-zyo V4sWpLJcQoU 0.0025
+2MoGxae-zyo p-byEw_tKa8 0.0025
+2MoGxae-zyo Byn9mPPZrtk 0.0025
+2MoGxae-zyo 2pLT-olgUJs 0.02
+2MoGxae-zyo 2MoGxae-zyo 1.0
+2MoGxae-zyo ZveSMkUr0l0 0.0025
+2MoGxae-zyo eUtHIueatxU 0.0025
+2MoGxae-zyo I9nG-G4B5Bs 0.02
+p-byEw_tKa8 ['j64BBgBGNIU', 'p-byEw_tKa8', '2pLT-olgUJs', 'uJynle14rSE', 'Th97oQ4eF9U', 'ZveSMkUr0l0', 'EUruBzhv7Kk']
+p-byEw_tKa8 ['_3NCDf7pplc', 'j64BBgBGNIU', 'p-byEw_tKa8', 'Byn9mPPZrtk', 'uJynle14rSE', '2MoGxae-zyo', 'Th97oQ4eF9U', 'ZveSMkUr0l0', 'WE8kILaQvWw', 'EUruBzhv7Kk']
+p-byEw_tKa8 j64BBgBGNIU 0.0075
+p-byEw_tKa8 p-byEw_tKa8 1.0
+p-byEw_tKa8 2pLT-olgUJs 0.0075
+p-byEw_tKa8 uJynle14rSE 0.0025
+p-byEw_tKa8 Th97oQ4eF9U 0.01
+p-byEw_tKa8 ZveSMkUr0l0 0.0275
+p-byEw_tKa8 EUruBzhv7Kk 0.01
+p-byEw_tKa8 _3NCDf7pplc 0.0025
+p-byEw_tKa8 j64BBgBGNIU 0.0025
+p-byEw_tKa8 p-byEw_tKa8 1.0
+p-byEw_tKa8 Byn9mPPZrtk 0.0025
+p-byEw_tKa8 uJynle14rSE 0.01
+p-byEw_tKa8 2MoGxae-zyo 0.0025
+p-byEw_tKa8 Th97oQ4eF9U 0.0025
+p-byEw_tKa8 ZveSMkUr0l0 0.0025
+p-byEw_tKa8 WE8kILaQvWw 0.0025
+p-byEw_tKa8 EUruBzhv7Kk 0.0175
+_3NCDf7pplc ['_3NCDf7pplc']
+_3NCDf7pplc ['4CkVdu4z1HA', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'p-byEw_tKa8', 'V4sWpLJcQoU', 'y-nbg7vNkcY', 'Th97oQ4eF9U', '2pLT-olgUJs', 'AQ-zcv_viAo', '2MoGxae-zyo', 'ZveSMkUr0l0', 'eUtHIueatxU', 'WE8kILaQvWw', 'I9nG-G4B5Bs']
+_3NCDf7pplc 4CkVdu4z1HA 0.0075
+_3NCDf7pplc cIuiQyfKBTg 0.005
+_3NCDf7pplc _3NCDf7pplc 1.0
+_3NCDf7pplc j64BBgBGNIU 0.005
+_3NCDf7pplc p-byEw_tKa8 0.0025
+_3NCDf7pplc V4sWpLJcQoU 0.0025
+_3NCDf7pplc y-nbg7vNkcY 0.005
+_3NCDf7pplc Th97oQ4eF9U 0.005
+_3NCDf7pplc 2pLT-olgUJs 0.0075
+_3NCDf7pplc AQ-zcv_viAo 0.0025
+_3NCDf7pplc 2MoGxae-zyo 0.0025
+_3NCDf7pplc ZveSMkUr0l0 0.005
+_3NCDf7pplc eUtHIueatxU 0.025
+_3NCDf7pplc WE8kILaQvWw 0.005
+_3NCDf7pplc I9nG-G4B5Bs 0.005
+AQ-zcv_viAo ['Byn9mPPZrtk', 'AQ-zcv_viAo']
+AQ-zcv_viAo ['4CkVdu4z1HA', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'V4sWpLJcQoU', 'Byn9mPPZrtk', 'AQ-zcv_viAo', 'I9nG-G4B5Bs', 'eUtHIueatxU', 'EUruBzhv7Kk']
+AQ-zcv_viAo Byn9mPPZrtk 0.01
+AQ-zcv_viAo AQ-zcv_viAo 1.0
+AQ-zcv_viAo 4CkVdu4z1HA 0.0075
+AQ-zcv_viAo cIuiQyfKBTg 0.0325
+AQ-zcv_viAo _3NCDf7pplc 0.0025
+AQ-zcv_viAo j64BBgBGNIU 0.0025
+AQ-zcv_viAo V4sWpLJcQoU 0.005
+AQ-zcv_viAo Byn9mPPZrtk 0.0075
+AQ-zcv_viAo AQ-zcv_viAo 1.0
+AQ-zcv_viAo I9nG-G4B5Bs 0.0025
+AQ-zcv_viAo eUtHIueatxU 0.0075
+AQ-zcv_viAo EUruBzhv7Kk 0.01
+2pLT-olgUJs ['2pLT-olgUJs', 'uJynle14rSE', 'j64BBgBGNIU', 'p-byEw_tKa8']
+2pLT-olgUJs ['4CkVdu4z1HA', 'ZveSMkUr0l0', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'V4sWpLJcQoU', 'Byn9mPPZrtk', '2pLT-olgUJs', '2MoGxae-zyo', 'Th97oQ4eF9U', 'eUtHIueatxU', 'I9nG-G4B5Bs']
+2pLT-olgUJs 2pLT-olgUJs 1.0
+2pLT-olgUJs uJynle14rSE 0.0025
+2pLT-olgUJs j64BBgBGNIU 0.01
+2pLT-olgUJs p-byEw_tKa8 0.0075
+2pLT-olgUJs 4CkVdu4z1HA 0.02
+2pLT-olgUJs ZveSMkUr0l0 0.025
+2pLT-olgUJs cIuiQyfKBTg 0.0025
+2pLT-olgUJs _3NCDf7pplc 0.0075
+2pLT-olgUJs j64BBgBGNIU 0.015
+2pLT-olgUJs V4sWpLJcQoU 0.0075
+2pLT-olgUJs Byn9mPPZrtk 0.005
+2pLT-olgUJs 2pLT-olgUJs 1.0
+2pLT-olgUJs 2MoGxae-zyo 0.02
+2pLT-olgUJs Th97oQ4eF9U 0.005
+2pLT-olgUJs eUtHIueatxU 0.005
+2pLT-olgUJs I9nG-G4B5Bs 0.025
+WE8kILaQvWw ['WE8kILaQvWw']
+WE8kILaQvWw ['_3NCDf7pplc', 'p-byEw_tKa8', 'Byn9mPPZrtk', 'ZveSMkUr0l0', 'WE8kILaQvWw']
+WE8kILaQvWw _3NCDf7pplc 0.005
+WE8kILaQvWw p-byEw_tKa8 0.0025
+WE8kILaQvWw Byn9mPPZrtk 0.0075
+WE8kILaQvWw ZveSMkUr0l0 0.0025
+WE8kILaQvWw WE8kILaQvWw 1.0
+eUtHIueatxU ['eUtHIueatxU']
+eUtHIueatxU ['ZveSMkUr0l0', '4CkVdu4z1HA', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'tXWh-dowiLg', 'V4sWpLJcQoU', 'Byn9mPPZrtk', '2pLT-olgUJs', 'AQ-zcv_viAo', '2MoGxae-zyo', 'Th97oQ4eF9U', 'eUtHIueatxU', 'I9nG-G4B5Bs']
+eUtHIueatxU ZveSMkUr0l0 0.0125
+eUtHIueatxU 4CkVdu4z1HA 0.0075
+eUtHIueatxU cIuiQyfKBTg 0.0025
+eUtHIueatxU _3NCDf7pplc 0.025
+eUtHIueatxU j64BBgBGNIU 0.005
+eUtHIueatxU tXWh-dowiLg 0.0075
+eUtHIueatxU V4sWpLJcQoU 0.0125
+eUtHIueatxU Byn9mPPZrtk 0.0025
+eUtHIueatxU 2pLT-olgUJs 0.005
+eUtHIueatxU AQ-zcv_viAo 0.0075
+eUtHIueatxU 2MoGxae-zyo 0.0025
+eUtHIueatxU Th97oQ4eF9U 0.0075
+eUtHIueatxU eUtHIueatxU 1.0
+eUtHIueatxU I9nG-G4B5Bs 0.01
+y-nbg7vNkcY ['y-nbg7vNkcY']
+y-nbg7vNkcY ['y-nbg7vNkcY', '_3NCDf7pplc']
+y-nbg7vNkcY y-nbg7vNkcY 1.0
+y-nbg7vNkcY _3NCDf7pplc 0.005
+4Zne-5V30xg ['4Zne-5V30xg']
+4Zne-5V30xg ['Byn9mPPZrtk', '4Zne-5V30xg', 'ZveSMkUr0l0']
+4Zne-5V30xg Byn9mPPZrtk 0.005
+4Zne-5V30xg 4Zne-5V30xg 1.0
+4Zne-5V30xg ZveSMkUr0l0 0.0025
+cIuiQyfKBTg ['cIuiQyfKBTg']
+cIuiQyfKBTg ['4CkVdu4z1HA', 'cIuiQyfKBTg', '_3NCDf7pplc', 'j64BBgBGNIU', 'V4sWpLJcQoU', 'Byn9mPPZrtk', 'EUruBzhv7Kk', 'Th97oQ4eF9U', '2pLT-olgUJs', 'AQ-zcv_viAo', '2MoGxae-zyo', 'ZveSMkUr0l0', 'eUtHIueatxU', 'I9nG-G4B5Bs']
+cIuiQyfKBTg 4CkVdu4z1HA 0.0025
+cIuiQyfKBTg cIuiQyfKBTg 1.0
+cIuiQyfKBTg _3NCDf7pplc 0.005
+cIuiQyfKBTg j64BBgBGNIU 0.0025
+cIuiQyfKBTg V4sWpLJcQoU 0.0025
+cIuiQyfKBTg Byn9mPPZrtk 0.0025
+cIuiQyfKBTg EUruBzhv7Kk 0.005
+cIuiQyfKBTg Th97oQ4eF9U 0.0025
+cIuiQyfKBTg 2pLT-olgUJs 0.0025
+cIuiQyfKBTg AQ-zcv_viAo 0.0325
+cIuiQyfKBTg 2MoGxae-zyo 0.0025
+cIuiQyfKBTg ZveSMkUr0l0 0.015
+cIuiQyfKBTg eUtHIueatxU 0.0025
+cIuiQyfKBTg I9nG-G4B5Bs 0.0025
+EUruBzhv7Kk ['Th97oQ4eF9U', 'EUruBzhv7Kk', 'p-byEw_tKa8', 'ZveSMkUr0l0']
+EUruBzhv7Kk ['cIuiQyfKBTg', 'p-byEw_tKa8', 'uJynle14rSE', 'AQ-zcv_viAo', 'ZveSMkUr0l0', 'EUruBzhv7Kk']
+EUruBzhv7Kk Th97oQ4eF9U 0.0025
+EUruBzhv7Kk EUruBzhv7Kk 1.0
+EUruBzhv7Kk p-byEw_tKa8 0.01
+EUruBzhv7Kk ZveSMkUr0l0 0.0175
+EUruBzhv7Kk cIuiQyfKBTg 0.005
+EUruBzhv7Kk p-byEw_tKa8 0.0175
+EUruBzhv7Kk uJynle14rSE 0.015
+EUruBzhv7Kk AQ-zcv_viAo 0.01
+EUruBzhv7Kk ZveSMkUr0l0 0.0025
+EUruBzhv7Kk EUruBzhv7Kk 1.0
+Zh-ik4RD5hU ['Zh-ik4RD5hU']
+Zh-ik4RD5hU ['YTUMDBOobTw', 'Zh-ik4RD5hU']
+Zh-ik4RD5hU YTUMDBOobTw 0.0025
+Zh-ik4RD5hU Zh-ik4RD5hU 1.0
+xBD9QDqlBBo ['RusVU_XSzTk', 'xBD9QDqlBBo']
+xBD9QDqlBBo ['xBD9QDqlBBo']
+xBD9QDqlBBo RusVU_XSzTk 0.005
+xBD9QDqlBBo xBD9QDqlBBo 1.0
+IlU-zDU6aQ0 ['IlU-zDU6aQ0']
+IlU-zDU6aQ0 ['IlU-zDU6aQ0']
+RusVU_XSzTk ['RusVU_XSzTk', 'xBD9QDqlBBo']
+RusVU_XSzTk ['RusVU_XSzTk']
+RusVU_XSzTk RusVU_XSzTk 1.0
+RusVU_XSzTk xBD9QDqlBBo 0.005
+YTUMDBOobTw ['YTUMDBOobTw']
+YTUMDBOobTw ['Zh-ik4RD5hU', 'YTUMDBOobTw']
+YTUMDBOobTw Zh-ik4RD5hU 0.0025
+YTUMDBOobTw YTUMDBOobTw 1.0
+Z_RM77sWCUE ['Z_RM77sWCUE']
+Z_RM77sWCUE ['Z_RM77sWCUE']
+0NbBjNiw4tk ['0NbBjNiw4tk']
+0NbBjNiw4tk ['0NbBjNiw4tk']
+L2suMPiuog4 ['L2suMPiuog4']
+L2suMPiuog4 ['L2suMPiuog4']
+k6TWO-ESC6A ['k6TWO-ESC6A']
+k6TWO-ESC6A ['7UNLgPIiWAg', 'k6TWO-ESC6A']
+k6TWO-ESC6A 7UNLgPIiWAg 0.0025
+k6TWO-ESC6A k6TWO-ESC6A 1.0
+ElulEJruhRQ ['ElulEJruhRQ']
+ElulEJruhRQ ['ElulEJruhRQ']
+t8o5W425uhw ['t8o5W425uhw']
+t8o5W425uhw ['t8o5W425uhw']
+iVpXrbZ4bnU ['iVpXrbZ4bnU']
+iVpXrbZ4bnU ['iVpXrbZ4bnU']
+7UNLgPIiWAg ['7UNLgPIiWAg']
+7UNLgPIiWAg ['7UNLgPIiWAg', 'k6TWO-ESC6A']
+7UNLgPIiWAg 7UNLgPIiWAg 1.0
+7UNLgPIiWAg k6TWO-ESC6A 0.0025
+L5lfurZ2k8A ['L5lfurZ2k8A']
+L5lfurZ2k8A ['L5lfurZ2k8A', 'AfCLZPppwL0']
+L5lfurZ2k8A L5lfurZ2k8A 1.0
+L5lfurZ2k8A AfCLZPppwL0 0.0025
+i9x4HFUFVIE ['i9x4HFUFVIE']
+i9x4HFUFVIE ['i9x4HFUFVIE']
+AfCLZPppwL0 ['AfCLZPppwL0']
+AfCLZPppwL0 ['ksG2jeKZqVM', 'L5lfurZ2k8A', 'AfCLZPppwL0']
+AfCLZPppwL0 ksG2jeKZqVM 0.0025
+AfCLZPppwL0 L5lfurZ2k8A 0.0025
+AfCLZPppwL0 AfCLZPppwL0 1.0
+ksG2jeKZqVM ['ksG2jeKZqVM']
+ksG2jeKZqVM ['ksG2jeKZqVM', 'AfCLZPppwL0']
+ksG2jeKZqVM ksG2jeKZqVM 1.0
+ksG2jeKZqVM AfCLZPppwL0 0.0025
+CMllPAuDjNQ ['CMllPAuDjNQ']
+CMllPAuDjNQ ['CMllPAuDjNQ']
+FB2UE_SWIXY ['FB2UE_SWIXY']
+FB2UE_SWIXY ['FB2UE_SWIXY']
+7kpDA8wgOrU ['7kpDA8wgOrU']
+7kpDA8wgOrU ['7kpDA8wgOrU', '1zwko8D5lRw', 'UW39eAlznco']
+7kpDA8wgOrU 7kpDA8wgOrU 1.0
+7kpDA8wgOrU 1zwko8D5lRw 0.005
+7kpDA8wgOrU UW39eAlznco 0.015
+3qYykmHx5gc ['3qYykmHx5gc']
+3qYykmHx5gc ['3qYykmHx5gc']
+zLVMY33rZis ['zLVMY33rZis']
+zLVMY33rZis ['1zwko8D5lRw', 'UW39eAlznco', 'zLVMY33rZis']
+zLVMY33rZis 1zwko8D5lRw 0.0025
+zLVMY33rZis UW39eAlznco 0.005
+zLVMY33rZis zLVMY33rZis 1.0
+xe55HVhPrlo ['xe55HVhPrlo']
+xe55HVhPrlo ['xe55HVhPrlo', 'UW39eAlznco']
+xe55HVhPrlo xe55HVhPrlo 1.0
+xe55HVhPrlo UW39eAlznco 0.0025
+wFMorRyhqy8 ['wFMorRyhqy8']
+wFMorRyhqy8 ['8LSw3dkB52k', 'wFMorRyhqy8']
+wFMorRyhqy8 8LSw3dkB52k 0.0025
+wFMorRyhqy8 wFMorRyhqy8 1.0
+UW39eAlznco ['UW39eAlznco']
+UW39eAlznco ['xe55HVhPrlo', 'XOyXN9SgTl4', '7kpDA8wgOrU', '1zwko8D5lRw', 'UW39eAlznco', 'zLVMY33rZis']
+UW39eAlznco xe55HVhPrlo 0.0025
+UW39eAlznco XOyXN9SgTl4 0.0025
+UW39eAlznco 7kpDA8wgOrU 0.015
+UW39eAlznco 1zwko8D5lRw 0.0175
+UW39eAlznco UW39eAlznco 1.0
+UW39eAlznco zLVMY33rZis 0.005
+XOyXN9SgTl4 ['XOyXN9SgTl4']
+XOyXN9SgTl4 ['UW39eAlznco', 'XOyXN9SgTl4']
+XOyXN9SgTl4 UW39eAlznco 0.0025
+XOyXN9SgTl4 XOyXN9SgTl4 1.0
+CPW8q7_bOZU ['CPW8q7_bOZU']
+CPW8q7_bOZU ['CPW8q7_bOZU']
+94LNBOFEadA ['94LNBOFEadA']
+94LNBOFEadA ['94LNBOFEadA']
+1zwko8D5lRw ['1zwko8D5lRw']
+1zwko8D5lRw ['7kpDA8wgOrU', '1zwko8D5lRw', 'UW39eAlznco', 'zLVMY33rZis']
+1zwko8D5lRw 7kpDA8wgOrU 0.005
+1zwko8D5lRw 1zwko8D5lRw 1.0
+1zwko8D5lRw UW39eAlznco 0.0175
+1zwko8D5lRw zLVMY33rZis 0.0025
+4Sk-9hqf8vY ['4Sk-9hqf8vY']
+4Sk-9hqf8vY ['J5wqeUewAXk', '4Sk-9hqf8vY']
+4Sk-9hqf8vY J5wqeUewAXk 0.0025
+4Sk-9hqf8vY 4Sk-9hqf8vY 1.0
+J5wqeUewAXk ['J5wqeUewAXk']
+J5wqeUewAXk ['4Sk-9hqf8vY', 'J5wqeUewAXk']
+J5wqeUewAXk 4Sk-9hqf8vY 0.0025
+J5wqeUewAXk J5wqeUewAXk 1.0
+
+Process finished with exit code 0

@@ -1,5 +1,4 @@
-import sys
-import random
+import sqlData as sql
 
 def w_shingle(string, w):
     """Return (now a string) of the set of contiguous sequences (shingles) of `w` words
@@ -53,10 +52,13 @@ def calculate_shingle_weight(shingle):
     return weight
 
 class File:
-    def __init__(self, filename, shingle_size=4):
+    def __init__(self, filename, isFile=False, contents=None, shingle_size=4):
         self.filename = filename
-        with open(filename, 'r') as fp:
-            self.contents = fp.read()
+        if isFile:
+            with open(filename, 'r') as fp:
+                self.contents = fp.read()
+        else:
+            self.contents=contents
         self.shingles = w_shingle(self.contents, shingle_size)
         for shingle in self.shingles:
             words = shingle.split(' ')
@@ -71,18 +73,18 @@ class File:
                     all_words[word]['documents'].add(self.filename)
         self.minhash = None
 
-    def get_n_best_shingles(self, n=200):
+    def get_n_best_shingles(self, n=400):
         ret = [(calculate_shingle_weight(shingle), shingle) for shingle in self.shingles]
         ret = sorted(ret, key=lambda x: x[0], reverse=True)
         ret = [shingle[1] for shingle in ret]
         return ret[:n]
 
     def generate_minhash(self):
-        self.minhash = MinHash(num_perm=300)
-        for shingle in self.get_n_best_shingles(n=300):
+        self.minhash = MinHash(num_perm=400)
+        for shingle in self.get_n_best_shingles(n=400):
             self.minhash.update(shingle.encode('utf8'))
 
-
+"""
 comments.append(File('data/8LSw3dkB52kComments.txt', shingle_size=2))
 comments.append(File('data/9Ikknmv3DYgComments.txt', shingle_size=2))
 comments.append(File('data/IuFPD8-0YDYComments.txt', shingle_size=2))
@@ -94,14 +96,26 @@ transcripts.append(File('data/9Ikknmv3DYgTranscript.txt', shingle_size=4))
 transcripts.append(File('data/IuFPD8-0YDYTranscript.txt', shingle_size=4))
 transcripts.append(File('data/cjzx7io_C5MTranscript.txt', shingle_size=4))
 transcripts.append(File('data/nXO2T9rXGEITranscript.txt', shingle_size=4))
+"""
 
-comment_lsh = MinHashLSH(threshold=0.001, num_perm=300)
+
+con = sql.connect_db('videoInfo.db')
+videos = sql.get_all_videos(con)
+for video in videos:
+    video_id = video[0]
+    print("Inserted", video_id, "into memory")
+    comments.append(File(video_id, contents=video[2]))
+    transcripts.append(File(video_id, contents=video[3]))
+
+comment_lsh = MinHashLSH(threshold=0.001, num_perm=400)
 for comment in comments:
+    print("Generating minhash for", comment.filename)
     comment.generate_minhash()
     comment_lsh.insert(comment.filename, comment.minhash)
 
-transcripts_lsh = MinHashLSH(threshold=0.001, num_perm=300)
+transcripts_lsh = MinHashLSH(threshold=0.001, num_perm=400)
 for transcript in transcripts:
+    print("Generating minhash for", transcript.filename)
     transcript.generate_minhash()
     transcripts_lsh.insert(transcript.filename, transcript.minhash)
 
@@ -110,7 +124,17 @@ for video_id in range(len(comments)):
     comment_result = comment_lsh.query(comments[video_id].minhash)
     transcript_result = transcripts_lsh.query(transcripts[video_id].minhash)
 
-    print(comments[video_id].filename, comments[video_id].get_n_best_shingles(n=10))
+    #print(comments[video_id].filename, comments[video_id].get_n_best_shingles(n=10))
     print(comments[video_id].filename, comment_result)
-    print(comments[video_id].filename, transcripts[video_id].get_n_best_shingles(n=10))
-    print(comments[video_id].filename, transcript_result)
+    # print(comments[video_id].filename, transcripts[video_id].get_n_best_shingles(n=10))
+    print(transcripts[video_id].filename, transcript_result)
+
+    if len(comment_result) > 1:
+        for other_video_id in comment_result:
+            comment_minhash = [comment.minhash for comment in comments if comment.filename == other_video_id][0]
+            print(comments[video_id].filename, other_video_id, comments[video_id].minhash.jaccard(comment_minhash))
+
+    if len(transcript_result) > 1:
+        for other_video_id in transcript_result:
+            transcript_minhash = [transcript.minhash for transcript in transcripts if transcript.filename == other_video_id][0]
+            print(transcripts[video_id].filename, other_video_id, transcripts[video_id].minhash.jaccard(transcript_minhash))
