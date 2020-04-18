@@ -32,7 +32,7 @@ db_name = 'videoInfo.db'
 #https://www.youtube.com/watch?v=B-yhF7IScUE movies
 # https://www.youtube.com/watch?v=glD1M418bC0
 
-vids = VC.scrape_vids(count = 20, seed = "https://www.youtube.com/watch?v=rnhEKl_FrXc")
+vids = VC.scrape_vids(count = 20, seed = "https://www.youtube.com/watch?v=o5fdhfVrg1I")
 print(vids)
 
 #vids = [
