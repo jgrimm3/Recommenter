@@ -32,8 +32,8 @@ db_name = 'videoInfo.db'
 #https://www.youtube.com/watch?v=B-yhF7IScUE movies
 # https://www.youtube.com/watch?v=glD1M418bC0
 
-vids = VC.scrape_vids(count = 12, seed = "https://www.youtube.com/watch?v=3bXWGxhd7ic")
-#print(vids)
+vids = VC.scrape_vids(count = 20, seed = "https://www.youtube.com/watch?v=1vl9N4Sk8QY")
+print(vids)
 
 #vids = [
     #gaming
@@ -53,7 +53,8 @@ vids = VC.scrape_vids(count = 12, seed = "https://www.youtube.com/watch?v=3bXWGx
     #'https://www.youtube.com/watch?v=5DGwOJXSxqg', #coronavirus
     #'https://www.youtube.com/watch?v=4J0d59dd-qM' #coronavirus
     #'https://www.youtube.com/watch?v=3bXWGxhd7ic' #coronavirus documentary
-# ]
+
+#]
 
 #Main
 for url in vids:
