@@ -7,6 +7,7 @@ import re
 def scrape_vids(count, seed):
     videos = []
     url = seed
+    seen = []
     while len(videos) < count:
 
         html = urlopen(url)
@@ -20,8 +21,9 @@ def scrape_vids(count, seed):
             end = start + 11
             id = r4[start: end]
             url = 'https://www.youtube.com/watch?v='+id
-            if url not in videos:
+            if url not in videos and id not in seen:
                 videos.append(url)
+                seen.append(id)
     return videos
 
 
