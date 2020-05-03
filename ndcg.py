@@ -7,6 +7,7 @@ import youtube_api.parsers as parser
 from sklearn.metrics import ndcg_score
 from openpyxl import Workbook
 from openpyxl import load_workbook
+import numpy as np
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 youtube = YoutubeDataApi('AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74')
@@ -44,13 +45,13 @@ def fill_Excell(youRanks, recRanks):
     sheet.cell(row=1, column=1).value = "Video Link"
     sheet.cell(row=1, column=2).value = "Rank 1 - 5"
     for row in range(2, 21):
-        if row <= 10:
-            sheet.cell(row=row, column=1).hyperlink = "https://www.youtube.com/watch?v=" + youRanks[row - 1]
+        if row <= 11:
+            sheet.cell(row=row, column=1).hyperlink = "https://www.youtube.com/watch?v=" + youRanks[row - 2]
             sheet.cell(row=row, column=1).style = "Hyperlink"
         else:
-            ind = row - 10
-            sheet.cell(row=row, column=1).hyperlink = "https://www.youtube.com/watch?v=" + youRanks[ind - 1]
-            sheet.cell(row=row, column=1).style = "Hyperlink"
+            ind = row - 11
+            #sheet.cell(row=row, column=1).hyperlink = "https://www.youtube.com/watch?v=" + recRanks[ind - 1]
+            #sheet.cell(row=row, column=1).style = "Hyperlink"
     workbook.save(filename=filename)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -59,16 +60,16 @@ def fill_Excell(youRanks, recRanks):
 def pull_excelRanks():
     wb = load_workbook("NDCG_Rubric.xlsx")
     sheet = wb.active
-    true_scores = [20]
-    you_scores = [10]
-    rec_scores = [10]
+    true_scores = []
+    you_scores = []
+    rec_scores = []
     for row in range(2, 21):
-        true_scores[row] = sheet.cell(row=row, column=2).value
         if row <= 10:
-            you_scores[row] = sheet.cell(row=row, column=2).value
-        else:
-            ind = row - 10
-            rec_scores[ind] = sheet.cell(row=row, column=2).value
+            true_scores.append(int(sheet.cell(row=row, column=2).value))
+            you_scores.append(int(sheet.cell(row=row, column=2).value))
+        #else:
+            #true_scores.append(int(sheet.cell(row=row, column=2).value))
+            #rec_scores.append(sheet.cell(row=row, column=2).value)
 
     return true_scores, rec_scores, you_scores
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,22 +78,25 @@ def pull_excelRanks():
 #Eval NDCG
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def calc_NDCG(true_scores, rec_scores, you_scores):
-    true_relevance = true_scores
-    youtube_NDCG = ndcg_score(true_relevance, you_scores, k=10)
+    true_relevance = np.asarray([true_scores])
+    youtube_NDCG = ndcg_score(true_relevance, np.asarray([you_scores]), k=10)
+    print("Ground Truth  "+ str(true_scores))
+    print("Youtube Ranked  "+ str(you_scores))
+    print("NDCG " + str(youtube_NDCG))
     #recommenter_NDCG = ndcg_score(true_relevance, rec_scores, k=10)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def mainInput(inputURL):
-    print(inputURL)
-    Video_ID = inputURL.partition('v=')[2]
-    youtubeRecommended = youttubeRecommender(Video_ID, [])
-    recommenterRecommended = recommenterRecommender(Video_ID, [])
-    fill_Excell(youtubeRecommended, recommenterRecommended)
 
+    #Video_ID = inputURL.partition('v=')[2]
+    #youtubeRecommended = youttubeRecommender(Video_ID, [])
+    #recommenterRecommended = recommenterRecommender(Video_ID, [])
+    #fill_Excell(youtubeRecommended, recommenterRecommended)
+    #input("Press Enter to continue...")
     true_scores, rec_scores, you_scores = pull_excelRanks()
     true_scores.sort(reverse= True)
-
+    calc_NDCG(true_scores, rec_scores, you_scores)
 
 
 if __name__ == "__main__":
