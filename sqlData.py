@@ -16,15 +16,17 @@ def create_videoTable(con, create_sql_statement):
     except Error as e:
         print(e)
 
-def get_all_videos(con):
+def get_Video_ids(con):
     try:
         cur = con.cursor()
-        cur.execute("SELECT * from videos")
-        rows = cur.fetchall()
-        return rows
+        cur.execute("SELECT video_id from videos")
+        ids = cur.fetchall()
+
+        return ids
     except Error as e:
         print(e)
         return []
+
 
 #Be sure to sanitize all SQL requests
 def insert_video(con, video_id, url, comments, transcript, upload_date, channel):
@@ -33,6 +35,9 @@ def insert_video(con, video_id, url, comments, transcript, upload_date, channel)
     cur = con.cursor()
     cur.execute(sql, (video_id, url, comments, transcript, upload_date, channel))
     return cur.lastrowid
+
+
+
 
 def main():
     db_name = 'videoInfo.db'
