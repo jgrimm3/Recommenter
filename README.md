@@ -4,15 +4,25 @@ Custom Youtube recommendations based on video transcripts and video comments. In
 #Dependencies
 
 pip install utuby
+
 pip install beautifulsoup4
+
 pip install urllib
+
 pip install youtube-transcript-api
+
 pip install google-api-python-client
+
 pip install google-auth-oauthlib
+
 Pip install youtube-data-api
+
 pip install datasketch
+
 pip install rank-bm25
+
 pip install openpyxl
+
 pip install sklearn
 
 
