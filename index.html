@@ -93,7 +93,18 @@ layout: default
 		<li><b> Be sure to change the seed video after each run</b></li>
     		<li>You can change the number of videos to scrape for and the category of videos by changing the <i>Seed</i> and <i>Count</i> variables located on the first two lines of code</li>
 		<li> To change the threshold of comments that are gathered by Utuby (all comments will be retireved) vs YouTube API (only 100-500 comments will be retrieved)  on line 15 of <i> fetch_comments.py.</i> higher means longer scraping, lower means more chance of rate limit. </li>
-		</ul>
+	</ul>
+	</li>
+	
+	
+	<li><b>To evaluate NDCG</b>
+	<ul>
+		<li> Run createRubric.py with (url to the starting Youtube video, k) where k is the number of videos from EACH system to rank and the ground truth will be the top K from the union of both sets, as input. </li>
+		<li> This will generate an excel file populated with k links from YouTube recommendations and k links from Recommenter recommendations.</li>
+		<li> A user will numerically rank in column b from 1-5 thier interpretation of how similar the videos are to the input video.</li>
+		<li> Once all videos are ranked and the file is saved locally, run <i>ndcg.py<i>. </li>
+		<li> The Ground truth video Ids will be shown, along side the NDCG Scores for Youtube and Recommenter recommendations.</li>
+	</ul>
 	</li>
 </ul>
 </body>
