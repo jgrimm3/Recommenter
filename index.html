@@ -5,7 +5,7 @@
     <title>Recommenter</title>
 
     <h1> Recommenter</h1>
-    <h3> Authored By: Jared Grimm and Jyan Zárate</h3> <h4>CS 525 Information Retrieval WPI Spring 2020</h4>
+    <h3> Authored By: Jared Grimm and Jyan Zárate</h3> <h4>CS 525 Information Retrieval WPI Spring 2020, Professor Kyumin Lee</h4>
     <p> A Youtube Recommendation platform based on comments and transcripts to improve performance for recommending to niche communities. This project is strictly for educational research only.</p>
 </head>
 <body>
@@ -17,14 +17,55 @@
 	<li> <a href = https://drive.google.com/open?id=1LfZWEn3WGlUfUuI6as9qKxZeETNNzpA8> Video Comment & Transcript Database</a></li>
 </ul>
 
-
-
 <h4>Research Questions</h4>
 
-<p>Can we recommend videos solely off of YouTube comments and transcripts?</p>
-<p>How will these recommendations compare with Youtube?</p>
+<p>Can we recommend videos solely off of YouTube comments and transcripts through jaccard similarity?</p>
+<p>How will these recommendations compare with YouTube?</p>
 <p>How does this system scale?</p>
 
+<h4> Research Conclusions</h4>
+<p>We succefully can recommend videos solely based off of comments and transcripts</p>
+<p>Our recommendatsions compared to user generated ground truth had an NDCG score of UPDATE while YouTube scored UPDATE</p>
+<p>The system was much harder to scale than we anticipated. Gathering video metadata is plausable, however our limited computer reasources and time were not enough to generate the scale we anticipated. However once video metadata is extracted and hashing calculations are performed, the system scales very well only relying on query speed of the MongoDB (Update??)</p>
+
+<h4> Accomplishments</h4>
+<ul>
+	<li>Developed web crawler to scrape YouTube Comments and Transcripts</li>
+	<li>Made a database of roughly 3000 videos Comments, Transcripts, upload date channel Id and Video Ids available for future work</li>
+	<li><b>Computed tf-idf, LSH Jaccard Similarities and Okapi BM25 on N videos (UPDATE)</b></li>
+	<li><b> Indexed the calculations mentioned above for N videos into a MongoDB, available for future work</b></li>
+	<li>Implemented an automated user test ranking rubric through excel and automatic NDCG calculations comparing our results and YouTubes results to user generated ground truth.</li>
+	
+</ul>
+
+<h4>Challenges</h4>
+<ul>
+	<li>Gathering data is difficult
+		<ul>
+		<li>Not all videos had comments allowed or transcripts. Oftentimes movie trailers or music videos disabled subtitles on their videos. This would mean no trailers or music videos can be successfully recommended in our current system.</li>
+		<li>Github only allows tracking for files up to 100 mbs, so having to untrack our database and manually share and update over Google Drive was an inconvienice.</li>
+		<li>Processing speed for comments, it took roughly 1 minute per 1000 comments on videos to download, with some videos having well over 50,0000 comments, drastically slowing down data mining efforts.</li>
+		</ul>
+	</li>
+	<li>YouTubes API has flaws for this use-case
+		<ul>
+		<li>Overall YouTubes API was very limited in meeting our needs for data at scale. We had to construct our own database using a compbination of API calls, other libraries, and custom crawlers.</li>
+		<li>YouTube qouta limit extremely low. With its 10,000 credit per day limit were only able to process roughly 100 videos a day using YouTubes API alone</li>
+		<li>YouTube doesnt specify if related videos returned by "relatedToVideoId" which "retrieves a list of videos that are related to the video" are ordered by relevance at all. We assumed they are ranked from most relevant to least relevant in order to calculate NDCG</li>
+		</ul>
+	</li>
+</ul>
+
+
+<h4>Future Work</h4>
+<p>While we succesfully demonstrated the feasibility of using video comments and trascripts to target niche communities, we suggest the following improvements or additions to our work</p>
+
+<ul>
+
+	<li><b>Learning to Rank</b> Implement pairwise learning to rank in order to better weight the scores of comment similarity vs transcript similarity, or any other added features </li>
+	<li><b>Request Increased YouTube API Qouta</b>Given more time, one can submit a request to YouTube thorugh Google Cloud services to raise the API qouta for thier project, this would allow for faster data collection </li>
+	
+</ul>
 
 <h4> Dependencies </h4>
 <ul>
@@ -34,11 +75,12 @@
     <li> <i>pip install youtube-transcript-api </i> </li>
     <li> <i>pip install google-api-python-client </i> </li>
     <li> <i>pip install google-auth-oauthlib </i> </li>
-    <li> <i>Pip install youtube-data-api </i> </li>
+    <li> <i>pip install youtube-data-api </i> </li>
     <li> <i>pip install datasketch </i> </li>
     <li> <i>pip install rank-bm25 </i> </li>
     <li> <i>pip install openpyxl </i> </li>
     <li> <i>pip install sklearn  </i> </li>
+	<li> <i>pip install numpy</i> </li>
 </ul>
 <br>
 <h4> Running Instructions</h4>
