@@ -83,11 +83,17 @@ layout: default
 </ul>
 <br>
 <h4> Running Instructions</h4>
-
-<b> To gather YouTube video comments and trascripts</b>
-<br>Run <i> DataScraper.py</i>
-    You can change the number of videos to scrape for and the category of videos by changing the
-    <i>Seed</i> and <i>Count</i> variables located on the first two lines of code</p>
-
+<ul>
+	<li><b> To gather YouTube video comments and trascripts</b>
+	<ul>
+		<li>Everything needed to gather new comments and trancripst is stored in the <i> Video Database Generation </i> Folder. Make that folder your working directory with all dependencies installed.</li>
+		<li><b>Download the "Video and Comment Database" dound on this webpage<b> and insure videoInfo.db is in the working directory locally.</li>
+		<li> If youd rather create an empty database and start fresh, the functions to create a new database and table layouts are available in SQL.py to run from command line. Please read the file for more info</li>
+		<li>Run <i> DataScraper.py</i></li>
+    		<li>You can change the number of videos to scrape for and the category of videos by changing the <i>Seed</i> and <i>Count</i> variables located on the first two lines of code</li>
+		<li> To change the threshold of comments that are gathered by Utuby (all comments will be retireved) vs YouTube API (only 100-500 comments will be retrieved)  on line 15 of <i> fetch_comments.py.</i> higher means longer scraping, lower means more chance of rate limit. </li>
+		</ul>
+	</li>
+</ul>
 </body>
 
