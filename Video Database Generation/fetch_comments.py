@@ -61,9 +61,6 @@ def all_comments(url):
     return raw_comments
 
 def parse_comments(comments):
-    with open("stop_words.txt", 'r') as f:
-         stop_words  = [line.rstrip('\n') for line in f]
-    #print(stop_words)
 
     parsed_comments = ""
     words = []
@@ -74,7 +71,7 @@ def parse_comments(comments):
         words = re.split(r"[^a-z0-9]", text)
         # remove spaces and blank lines
         for word in words:
-            if len(word) >= 1 and word not in stop_words:
+            if len(word) >= 1:
                 parsed_comments += " " + word
     return parsed_comments
 
