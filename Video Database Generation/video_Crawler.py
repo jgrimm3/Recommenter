@@ -27,15 +27,7 @@ def scrape_vids(count, seed):
     return videos
 
 
-<<<<<<< HEAD:video_Crawler.py
-#if __name__ == "__main__":
-  #  scrape_vids(10,'https://www.youtube.com/watch?v=huTUOek4LgU')
-=======
-
-
-
-
 #     return videos
 # if __name__ == "__main__":
 #     scrape_vids(20,'https://www.youtube.com/watch?v=huTUOek4LgU')
->>>>>>> eca6de86a8541a1052b0d2a15bb38f860a7d1bd6:Video Database Generation/video_Crawler.py
+
