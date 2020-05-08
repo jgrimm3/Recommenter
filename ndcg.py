@@ -88,11 +88,11 @@ def calc_NDCG(true_scores, rec_scores, you_scores):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def mainInput(inputURL):
-
-    #Video_ID = inputURL.partition('v=')[2]
-    #youtubeRecommended = youttubeRecommender(Video_ID, [])
-    #recommenterRecommended = recommenterRecommender(Video_ID, [])
-    #fill_Excell(youtubeRecommended, recommenterRecommended)
+#have to run first once to populate excel, then comment out until the input line to pull and uncomment below input line
+    Video_ID = inputURL.partition('v=')[2]
+    youtubeRecommended = youttubeRecommender(Video_ID, [])
+    recommenterRecommended = recommenterRecommender(Video_ID, [])
+    fill_Excell(youtubeRecommended, recommenterRecommended)
     #input("Press Enter to continue...")
     true_scores, rec_scores, you_scores = pull_excelRanks()
     true_scores.sort(reverse= True)
