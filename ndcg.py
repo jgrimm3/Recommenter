@@ -59,7 +59,6 @@ if __name__ == "__main__":
     sorted_true = sorted(true_total, key=lambda x: x[0], reverse= True)
     true_scores = [list(s) for s in zip(*sorted_true)][0][:10]
     true_Vids = [list(s) for s in zip(*sorted_true)][1][:10]
-    print(true_Vids)
 
     you_scores = []
     for score,vid in you_total:
@@ -69,7 +68,7 @@ if __name__ == "__main__":
 
     rec_scores = []
     for score, vid in rec_total:
-        print(vid)
+
         if vid not in true_Vids:
             score = 0
         rec_scores.append(score)
