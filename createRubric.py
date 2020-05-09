@@ -17,7 +17,7 @@ recommenterRecommended = []
 
 #Pull top K videos from youtube API
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-def youttubeRecommender(ID, list):
+def youtubeRecommender(ID, list):
     videoInfo = youtube.get_recommended_videos( video_id= ID, max_results=10, parser= parser.raw_json )
     for dict in videoInfo:
         for id, value in dict["id"].items():
@@ -44,22 +44,22 @@ def fill_Excell(youRanks, recRanks):
     sheet.column_dimensions['A'].width = 50
     sheet.cell(row=1, column=1).value = "Video Link"
     sheet.cell(row=1, column=2).value = "Rank 1 - 5"
-    for row in range(2, 21):
+    for row in range(2, 22):
         if row <= 11:
             sheet.cell(row=row, column=1).hyperlink = "https://www.youtube.com/watch?v=" + youRanks[row - 2]
             sheet.cell(row=row, column=1).style = "Hyperlink"
         else:
             ind = row - 11
-            #sheet.cell(row=row, column=1).hyperlink = "https://www.youtube.com/watch?v=" + recRanks[ind - 1]
-            #sheet.cell(row=row, column=1).style = "Hyperlink"
+            sheet.cell(row=row, column=1).hyperlink = "https://www.youtube.com/watch?v=" + recRanks[ind-1]
+            sheet.cell(row=row, column=1).style = "Hyperlink"
     workbook.save(filename=filename)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def mainInput(inputURL):
 #have to run first once to populate excel, then comment out until the input line to pull and uncomment below input line
     Video_ID = inputURL.partition('v=')[2]
-    youtubeRecommended = youttubeRecommender(Video_ID, [])
-    recommenterRecommended = recommenterRecommender(Video_ID, [])
+    youtubeRecommended = youtubeRecommender(Video_ID, [])
+    recommenterRecommended = youtubeRecommender(Video_ID, [])
     fill_Excell(youtubeRecommended, recommenterRecommended)
 
 if __name__ == "__main__":
