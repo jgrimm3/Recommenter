@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 
 
 #CHANGE BELOW TO RUN SCRAPER
-seed = "https://www.youtube.com/watch?v=Kwz5DcjP7BY"
+seed = "https://www.youtube.com/watch?v=Egp4NRhlMDg"
 vids = VC.scrape_vids(count = 50, seed = seed)
 
 #yk AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74#
