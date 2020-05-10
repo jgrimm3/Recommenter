@@ -11,7 +11,8 @@ def extract_comments(id, url, youtube):
     count = count_comments(id, youtube)
     print(count)
     comments = ""
-    if int(count) > 15000:
+    #CHANGE THRESHOLD BELOW higher means longer scraping, lower means more chance of rate limit
+    if int(count) > 20000:
         comments = partial_comments(youtube, part='snippet', videoId=id, order ='relevance', textFormat='plainText')
     else:
         comments = all_comments(url)
@@ -60,9 +61,6 @@ def all_comments(url):
     return raw_comments
 
 def parse_comments(comments):
-    with open("stop_words.txt", 'r') as f:
-         stop_words  = [line.rstrip('\n') for line in f]
-    #print(stop_words)
 
     parsed_comments = ""
     words = []
@@ -73,7 +71,7 @@ def parse_comments(comments):
         words = re.split(r"[^a-z0-9]", text)
         # remove spaces and blank lines
         for word in words:
-            if len(word) >= 1 and word not in stop_words:
+            if len(word) >= 1:
                 parsed_comments += " " + word
     return parsed_comments
 

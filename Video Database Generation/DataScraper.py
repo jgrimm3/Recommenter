@@ -15,6 +15,10 @@ from bs4 import BeautifulSoup
 #it currently pulls from scraped URLS for a givven seed, and uploads information to sqllite database
 
 
+#CHANGE BELOW TO RUN SCRAPER
+seed = "https://www.youtube.com/watch?v=Egp4NRhlMDg"
+vids = VC.scrape_vids(count = 50, seed = seed)
+
 #yk AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74#
 # Disable OAuthlib's HTTPS verification when running locally.
 # *DO NOT* leave this option enabled in production.
@@ -29,11 +33,6 @@ youtube = googleapiclient.discovery.build(
 
 db_name = 'videoInfo.db'
 #https://www.youtube.com/watch?v=B-yhF7IScUE movies
-
-
-#next   https://www.youtube.com/watch?v=UVS1T8OueFM
-seed = "https://www.youtube.com/watch?v=uFHqDcu88bg"
-vids = VC.scrape_vids(count = 35, seed = seed)
 
 
 print(vids)

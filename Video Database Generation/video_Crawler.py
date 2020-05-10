@@ -27,10 +27,7 @@ def scrape_vids(count, seed):
     return videos
 
 
-
-
-
-
 #     return videos
 # if __name__ == "__main__":
 #     scrape_vids(20,'https://www.youtube.com/watch?v=huTUOek4LgU')
+
