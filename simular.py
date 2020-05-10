@@ -33,6 +33,7 @@ for i in range(len(filenames)):
 
 import math
 from datasketch import MinHash, MinHashLSH, WeightedMinHashGenerator
+from datasketch.experimental.aio.lsh import AsyncMinHashLSH
 
 all_words = dict()
 comments = []
@@ -99,42 +100,104 @@ transcripts.append(File('data/nXO2T9rXGEITranscript.txt', shingle_size=4))
 """
 
 
-con = sql.connect_db('videoInfo.db')
-videos = sql.get_all_videos(con)
-for video in videos:
-    video_id = video[0]
-    print("Inserted", video_id, "into memory")
-    comments.append(File(video_id, contents=video[2]))
-    transcripts.append(File(video_id, contents=video[3]))
+async def func():
+    con = sql.connect_db('videoInfo.db')
+    videos = sql.get_all_videos(con)
+    for video in videos:
+        video_id = video[0]
+        if len(video[2].split(' ')) < 5 or len(video[3].split(' ')) < 5:
+            print(f"Skipping over {video_id} for having a short comment or transcript")
+            continue
+        print("Inserted", video_id, "into memory")
+        comments.append(File(video_id, contents=video[2]))
+        transcripts.append(File(video_id, contents=video[3]))
 
-comment_lsh = MinHashLSH(threshold=0.001, num_perm=400)
-for comment in comments:
-    print("Generating minhash for", comment.filename)
-    comment.generate_minhash()
-    comment_lsh.insert(comment.filename, comment.minhash)
+    comment_lsh = await AsyncMinHashLSH(threshold=0.001, num_perm=400, storage_config={'type': 'aiomongo', 'mongo': {'host': 'localhost', 'port': 27017, 'db': 'comments_lsh'}})
 
-transcripts_lsh = MinHashLSH(threshold=0.001, num_perm=400)
-for transcript in transcripts:
-    print("Generating minhash for", transcript.filename)
-    transcript.generate_minhash()
-    transcripts_lsh.insert(transcript.filename, transcript.minhash)
+    transcripts_lsh = await AsyncMinHashLSH(threshold=0.001, num_perm=400, storage_config={'type': 'aiomongo', 'mongo': {'host': 'localhost', 'port': 27017, 'db': 'transcripts_lsh'}})
+
+    for comment in comments:
+        print("Generating minhash for", comment.filename)
+        comment.generate_minhash()
+        await comment_lsh.insert(comment.filename, comment.minhash)
+
+    for transcript in transcripts:
+        print("Generating minhash for", transcript.filename)
+        transcript.generate_minhash()
+        await transcripts_lsh.insert(transcript.filename, transcript.minhash)
 
 
-for video_id in range(len(comments)):
-    comment_result = comment_lsh.query(comments[video_id].minhash)
-    transcript_result = transcripts_lsh.query(transcripts[video_id].minhash)
+    for video_id in range(len(comments)):
+        comment_result = await comment_lsh.query(comments[video_id].minhash)
+        transcript_result = await transcripts_lsh.query(transcripts[video_id].minhash)
 
-    #print(comments[video_id].filename, comments[video_id].get_n_best_shingles(n=10))
-    print(comments[video_id].filename, comment_result)
-    # print(comments[video_id].filename, transcripts[video_id].get_n_best_shingles(n=10))
-    print(transcripts[video_id].filename, transcript_result)
+        #print(comments[video_id].filename, comments[video_id].get_n_best_shingles(n=10))
+        print(comments[video_id].filename, comment_result)
+        # print(comments[video_id].filename, transcripts[video_id].get_n_best_shingles(n=10))
+        print(transcripts[video_id].filename, transcript_result)
 
-    if len(comment_result) > 1:
-        for other_video_id in comment_result:
-            comment_minhash = [comment.minhash for comment in comments if comment.filename == other_video_id][0]
-            print(comments[video_id].filename, other_video_id, comments[video_id].minhash.jaccard(comment_minhash))
+        if len(comment_result) > 1:
+            for other_video_id in comment_result:
+                comment_minhash = [comment.minhash for comment in comments if comment.filename == other_video_id][0]
+                print(comments[video_id].filename, other_video_id, comments[video_id].minhash.jaccard(comment_minhash))
 
-    if len(transcript_result) > 1:
-        for other_video_id in transcript_result:
-            transcript_minhash = [transcript.minhash for transcript in transcripts if transcript.filename == other_video_id][0]
-            print(transcripts[video_id].filename, other_video_id, transcripts[video_id].minhash.jaccard(transcript_minhash))
+        if len(transcript_result) > 1:
+            for other_video_id in transcript_result:
+                transcript_minhash = [transcript.minhash for transcript in transcripts if transcript.filename == other_video_id][0]
+                print(transcripts[video_id].filename, other_video_id, transcripts[video_id].minhash.jaccard(transcript_minhash))
+
+async def otherfunc():
+    con = sql.connect_db('videoInfo3.db')
+    videos = sql.get_all_videos(con)
+    for video in videos:
+        video_id = video[0]
+        if len(video[2].split(' ')) < 5 or len(video[3].split(' ')) < 5:
+            print(f"Skipping over {video_id} for having a short comment or transcript")
+            continue
+        print("Inserted", video_id, "into memory")
+        comments.append(File(video_id, contents=video[2]))
+        transcripts.append(File(video_id, contents=video[3]))
+
+    lsh = await AsyncMinHashLSH(storage_config={'type': 'aiomongo', 'mongo': {'host': 'localhost', 'port': 27017, 'db': 'lsh_test'}}, threshold=0.01, num_perm=400)
+    lsh_transcripts = await AsyncMinHashLSH(storage_config={'type': 'aiomongo', 'mongo': {'host': 'localhost', 'port': 27017, 'db': 'lsh_transcripts'}}, threshold=0.01, num_perm=400)
+    for comment in comments:
+        print("Generating minhash for", comment.filename)
+        comment.generate_minhash()
+        await lsh.insert(comment.filename, comment.minhash)
+
+    for transcript in transcripts:
+        print("Generating minhash for transcript", transcript.filename)
+        transcript.generate_minhash()
+        await lsh_transcripts.insert(transcript.filename, transcript.minhash)
+
+    for video_id in range(len(comments)):
+        print(f"Querying results for {videos[video_id][0]}")
+        comment_result = await lsh.query(comments[video_id].minhash)
+        transcript_result = await lsh_transcripts.query(transcripts[video_id].minhash)
+
+        #print(comments[video_id].filename, comments[video_id].get_n_best_shingles(n=10))
+        # print(comments[video_id].filename, comment_result)
+        # print(comments[video_id].filename, transcripts[video_id].get_n_best_shingles(n=10))
+        # print(transcripts[video_id].filename, transcript_result)
+
+        if len(comment_result) > 1:
+            for other_video_id in comment_result:
+                if videos[video_id][0] == other_video_id:
+                    continue
+                comment_minhash = [comment.minhash for comment in comments if comment.filename == other_video_id][0]
+                print("comment", comments[video_id].filename, other_video_id, comments[video_id].minhash.jaccard(comment_minhash))
+
+        if len(transcript_result) > 1:
+            for other_video_id in transcript_result:
+                if videos[video_id][0] == other_video_id:
+                    continue
+                transcript_minhash = [transcript.minhash for transcript in transcripts if transcript.filename == other_video_id][0]
+                print("transcript", transcripts[video_id].filename, other_video_id, transcripts[video_id].minhash.jaccard(transcript_minhash))
+
+    await lsh.close()
+    await lsh_transcripts.close()
+
+import asyncio
+
+loop = asyncio.new_event_loop()
+loop.run_until_complete(otherfunc())

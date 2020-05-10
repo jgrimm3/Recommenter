@@ -27,6 +27,16 @@ def get_Video_ids(con):
         print(e)
         return []
 
+def get_all_videos(con):
+    try:
+        cur = con.cursor()
+        cur.execute("SELECT * from videos")
+        videos = cur.fetchall()
+        return videos
+    except Error as e:
+        print(e)
+        return []
+
 
 #Be sure to sanitize all SQL requests
 def insert_video(con, video_id, url, comments, transcript, upload_date, channel):
