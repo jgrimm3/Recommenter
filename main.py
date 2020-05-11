@@ -6,6 +6,9 @@ import math
 import sqlData as sql
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
+from tqdm import tqdm
+from pymongo import UpdateOne
+import base64
 
 SHINGLE_SIZE_COMMENTS = 2
 SHINGLE_SIZE_TRANSCRIPT = 4
@@ -47,7 +50,7 @@ class LSHWrapper:
     @classmethod
     async def create(cls, name: str) -> 'LSHWrapper':
         self = LSHWrapper(name)
-        self.lsh = await AsyncMinHashLSH(storage_config={'type': 'aiomongo', 'mongo': {'host': 'localhost', 'port': 27017, 'db': f"lsh_{name}"}}, threshold=0.01, num_perm=400)
+        self.lsh = await AsyncMinHashLSH(storage_config={'type': 'aiomongo', 'mongo': {'host': 'localhost', 'port': 27017, 'db': f"lsh_{name}_800"}}, threshold=0.01, num_perm=800)
         return self
 
     def query_from_video_id(self, video_id: str):
@@ -66,12 +69,51 @@ class LSHWrapper:
         await self.lsh.close()
 
 
+class MinHashStorage:
+    def __init__(self):
+        self.client = AsyncIOMotorClient('localhost', 27017)
+        self.db = self.client.get_database('min_hash_storage')
+        self.hashes_collection = self.db.get_collection('hashes')
+        pass
+
+    @classmethod
+    async def create(cls) -> 'MinHashStorage':
+        self = MinHashStorage()
+        return self
+
+    async def store_hash(self, mh_id: str, mh: datasketch.MinHash):
+        """
+        Note, this will be saved as a LeanMinHash.
+        :param mh_id:
+        :param mh:
+        :return:
+        """
+        lean_mh = datasketch.LeanMinHash(mh) # converts minhash into lean minash
+        buf = bytearray(lean_mh.bytesize()) # create buf that we will upload to mongo
+        lean_mh.serialize(buf) # serializes lean mh into the buffer
+        base64_bytes = base64.b64encode(buf)
+        await self.hashes_collection.update_one({'mh_id': mh_id}, {'$set': {'base64_bytes': base64_bytes}}, upsert=True)
+
+    async def retrieve_hash(self, mh_id: str) -> datasketch.LeanMinHash:
+        """
+        Note.
+        :param mh_id:
+        :return: None if not stored
+        """
+        doc = await self.hashes_collection.find_one({'mh_id': mh_id})
+        if doc is None:
+            return None
+        base64_bytes = doc['base64_bytes']
+        buf = bytearray(base64.b64decode(base64_bytes))
+        lean_mh = datasketch.LeanMinHash.deserialize(buf)
+        return lean_mh
+
 
 class WordFrequency:
     def __init__(self, type="in_memory"):
         self.has_cache = False
         self.unique_doc = None
-        self.word_entries = []
+        self.word_entries = dict()
         self.type = type
         if self.type == "in_memory":
             self.index = dict()
@@ -92,19 +134,30 @@ class WordFrequency:
 
     async def build_cache(self):
         self.unique_doc = await self.misc_collection.find_one({'purpose': 'doc_ids'})
-        self.word_entries = await self.words_collection.find().sort('frequency', -1).to_list(length=6000)
+        self.word_entries = dict()
+        print("Building word cache...")
+        for entry in (await self.words_collection.find().sort('frequency', -1).to_list(100000)):
+            self.word_entries[entry['word']] = entry
+        print(f"Number of words in cache {len(self.word_entries)}")
         self.has_cache = True
 
     async def upload_cache(self):
         if self.has_cache is False:
             return
-        await self.misc_collection.update_one({'purpose': 'doc_ids'}, { '$set': {'doc_ids': self.unique_doc['doc_ids']}})
-        for entry in self.word_entries:
+        print("Generating operations to update word entries...")
+        operations = []
+        for word, entry in tqdm(self.word_entries.items()):
             if 'dirty' in entry and entry['dirty'] is True:
                 entry['dirty'] = False
-                await self.words_collection.update_one({'word': entry['word']}, {'$set': entry}, upsert=True)
+                operations.append(UpdateOne({'word': entry['word']}, {'$set': entry}, upsert=True))
+                # await self.words_collection.update_one({'word': entry['word']}, {'$set': entry}, upsert=True)
+        print(f"Submitting bulk write request with {len(operations)} update operations...")
+        await self.words_collection.bulk_write(operations, ordered=False)
+        print("Deleted word cache")
+        print("Updating doc_ids")
+        self.words_entries = dict()
         self.has_cache = False
-        self.words_entries = []
+        await self.misc_collection.update_one({'purpose': 'doc_ids'}, { '$set': {'doc_ids': self.unique_doc['doc_ids']}})
 
     async def add_to_index(self, word, doc_id):
         if self.type == "in_memory":
@@ -122,14 +175,8 @@ class WordFrequency:
         elif self.type == "mongo":
             if self.has_cache is False:
                 await self.build_cache()
-            # first check if it's in our cache
-            cache_index = -1
-            for i in range(len(self.word_entries)):
-                if self.word_entries[i]['word'] == word:
-                    cache_index = i
-                    break
-            if cache_index != -1:
-                entry = self.word_entries[cache_index]
+            if word in self.word_entries:  # word is in our cache
+                entry = self.word_entries[word]
                 entry['frequency'] += 1
                 if doc_id not in entry['documents']:
                     entry['documents'].append(doc_id)
@@ -145,10 +192,8 @@ class WordFrequency:
                 if doc_id not in documents:
                     documents.append(doc_id)
                 frequency += 1
-                # update outside cache
-                #await self.words_collection.update_one({'word': word}, {'$set': {'frequency': frequency, 'documents': documents}}, upsert=True)
-                # download and add to our cache
-                self.word_entries.append({'word': word, 'frequency': frequency, 'documents': documents, 'dirty': True})
+                # add to our cache
+                self.word_entries[word] = {'word': word, 'frequency': frequency, 'documents': documents, 'dirty': True}
 
     async def add_doc_id(self, doc_id):
         if doc_id not in self.unique_doc['doc_ids']:
@@ -169,15 +214,9 @@ class WordFrequency:
             elif self.type == "mongo":
                 if self.has_cache is False:
                     await self.build_cache()
-                # first check if it's in our cache
-                cache_index = -1
-                for i in range(len(self.word_entries)):
-                    if self.word_entries[i]['word'] == word:
-                        cache_index = i
-                        break
                 entry = None
-                if cache_index != -1: # find entry in our cache
-                    entry = self.word_entries[cache_index]
+                if word in self.word_entries: # find entry in our cache
+                    entry = self.word_entries[word]
                 else: # find it in our db
                     entry = await self.words_collection.find_one(filter={'word': word})
                 if entry is not None:
@@ -196,15 +235,15 @@ class WordFrequency:
 
 class Recommenter:
     def __init__(self):
-        global minhash_storage
         self.word_frequency = WordFrequency(type="mongo")
-        self.minhash_storage = minhash_storage  # todo: make this networked
+        self.minhash_storage = None  # type: MinHashStorage
         self.transcripts = None  # type: LSHWrapper
         self.comments = None  # type: LSHWrapper
 
     @classmethod
     async def create(cls):
         self = Recommenter()
+        self.minhash_storage = await MinHashStorage.create()
         self.transcripts = await LSHWrapper.create(name="transcripts")
         self.comments = await LSHWrapper.create(name="comments")
         await self.word_frequency.initialize()
@@ -215,11 +254,11 @@ class Recommenter:
         videos = sql.get_all_videos(con)
         return [VideoFromDB(video) for video in videos]
 
-    def store_minhash(self, key: str, minhash) -> None:
-        self.minhash_storage[key] = minhash
+    async def store_minhash(self, key: str, minhash) -> None:
+        await self.minhash_storage.store_hash(key, minhash)
 
-    def retrieve_minhash(self, key: str):
-        return self.minhash_storage.get(key, None)
+    async def retrieve_minhash(self, key: str) -> datasketch.LeanMinHash:
+        return (await self.minhash_storage.retrieve_hash(key))
 
     async def close(self):
         await self.comments.close()
@@ -231,6 +270,8 @@ class Recommenter:
 async def populateDatabase():
     recommenter = await Recommenter.create()  # type: Recommenter
     videos = recommenter.readFromSQL("videoInfo3.db")[:1000]
+    """
+    i = 0
     for video in videos:
         # first we add the video's words to our word frequency index
         if video.id in recommenter.word_frequency.unique_doc['doc_ids']:
@@ -238,29 +279,33 @@ async def populateDatabase():
             continue
         else:
             print(f"Adding {video.id}'s words to word frequency index")
-            for word in ' '.join([video.comment_content, video.transcript_content]).split(' '):
+            for word in tqdm(' '.join([video.comment_content, video.transcript_content]).split(' ')):
                 await recommenter.word_frequency.add_to_index(word, video.id)
             await recommenter.word_frequency.add_doc_id(video.id)
-            await recommenter.word_frequency.upload_cache()
+            if i == 5:
+                await recommenter.word_frequency.upload_cache()
+                i = -1
+            i += 1
+    """
 
     for video in videos:
         if video.has_enough_comments():
             print(f"Generating comment minhash for {video.id}")
             shingles = w_shingle(video.comment_content, SHINGLE_SIZE_COMMENTS)
-            minhash = datasketch.MinHash(num_perm=400)
-            for shingle in (await recommenter.word_frequency.sort_shingles(shingles))[:400]:
+            minhash = datasketch.MinHash(num_perm=800)
+            for shingle in (await recommenter.word_frequency.sort_shingles(shingles))[:800]:
                 minhash.update(shingle.encode('utf8'))
             minhash_id = f"{video.id}-comment"
-            recommenter.store_minhash(minhash_id, minhash)
+            await recommenter.store_minhash(minhash_id, minhash)
             await recommenter.comments.insert_minhash_obj(minhash_id, minhash)
         if video.has_enough_transcripts():
             print(f"Generating transcript minhash for {video.id}")
             shingles = w_shingle(video.transcript_content, SHINGLE_SIZE_TRANSCRIPT)
-            minhash = datasketch.MinHash(num_perm=400)
-            for shingle in (await recommenter.word_frequency.sort_shingles(shingles))[:400]:
+            minhash = datasketch.MinHash(num_perm=800)
+            for shingle in (await recommenter.word_frequency.sort_shingles(shingles))[:800]:
                 minhash.update(shingle.encode('utf8'))
             minhash_id = f"{video.id}-transcript"
-            recommenter.store_minhash(minhash_id, minhash)
+            await recommenter.store_minhash(minhash_id, minhash)
             await recommenter.transcripts.insert_minhash_obj(minhash_id, minhash)
 
     await recommenter.close()
