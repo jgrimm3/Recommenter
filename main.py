@@ -13,7 +13,7 @@ import json
 import datetime
 
 SHINGLE_SIZE_COMMENTS = 2
-SHINGLE_SIZE_TRANSCRIPT = 2
+SHINGLE_SIZE_TRANSCRIPT = 3
 
 def w_shingle(string, w):
     """Return (now a string) of the set of contiguous sequences (shingles) of `w` words
@@ -342,6 +342,7 @@ async def populateDatabase():
         if video.id in ["5DGwOJXSxqg", "mWXurqWRA74", "jkGtMjkkmn4", "cqkiim_K0sc", "Ft00DUHRCOo", "FtX_oGO9MHo"]:
             print(f"Skipping {video.id} as its on the blacklist")
             continue
+        """
         if video.has_enough_comments():
             minhash_id = f"{video.id}-comment"
             if (await recommenter.retrieve_minhash(minhash_id)) != None:
@@ -358,8 +359,9 @@ async def populateDatabase():
             await recommenter.store_minhash(minhash_id, minhash)
             #print(f"Inserting minhash {minhash_id}")
             #await recommenter.comments.insert_minhash_obj(minhash_id, minhash)
+        """
         if video.has_enough_transcripts():
-            minhash_id = f"{video.id}-transcript"
+            minhash_id = f"{video.id}-transcript-w{SHINGLE_SIZE_TRANSCRIPT}"
             if (await recommenter.retrieve_minhash(minhash_id)) != None:
                 print(f"Skipping video {video.id} because transcript minhash stored, presumed already indexed.")
                 continue # skip video
@@ -419,7 +421,7 @@ async def brutesearch():
     videos = recommenter.readFromSQL("videoInfo4.db")
     minhashes = {}
     comment_lsh = datasketch.MinHashLSH(threshold=0.7, num_perm=800)
-    transcript_lsh = datasketch.MinHashLSH(threshold=0.7, num_perm=800)
+    transcript_lsh = datasketch.MinHashLSH(threshold=0.4, num_perm=800)
     print("Adding videos to lsh")
     for video in tqdm(videos):
         comment_mh = await recommenter.retrieve_minhash(f"{video.id}-comment")
@@ -466,6 +468,51 @@ async def brutesearch():
         fp.write(json.dumps(queried, indent=4))
     await recommenter.close()
 
+async def reallyBruteSearch():
+    recommenter = await Recommenter.create()  # type: Recommenter
+    videos = recommenter.readFromSQL("videoInfo4.db")
+    minhashes = {}
+    print("Adding videos to lsh")
+    for video in tqdm(videos):
+        comment_mh = await recommenter.retrieve_minhash(f"{video.id}-comment")
+        transcript_mh = await recommenter.retrieve_minhash(f"{video.id}-transcript-w3")
+        if comment_mh is not None:
+            minhashes[f"{video.id}-comment"] = comment_mh
+        if transcript_mh is not None:
+            minhashes[f"{video.id}-transcript-w3"] = transcript_mh
+    async def get_related_videos(vid_id: str) -> Dict[str, Dict[str, float]]:
+        results = {}  # type: Dict[str, Dict[str, float]]
+        comment_mh_id = f"{vid_id}-comment"
+        comment_mh = minhashes.get(comment_mh_id, None)
+        transcript_mh_id = f"{vid_id}-transcript-w3"
+        transcript_mh = minhashes.get(transcript_mh_id, None)
+        if comment_mh is None or transcript_mh is None:
+            return {}
+        for related_video_id in [video.id for video in videos if video.id != vid_id]:
+            related_comment_mh = minhashes.get(f"{related_video_id}-comment", None)
+            related_transcript_mh = minhashes.get(f"{related_video_id}-transcript-w3", None)
+            if related_comment_mh is not None and related_transcript_mh is not None:
+                comment_score = comment_mh.jaccard(related_comment_mh)
+                transcript_score = transcript_mh.jaccard(related_transcript_mh)
+                if comment_score > 0.03 and transcript_score > 0.03:
+                    results[related_video_id] = {}
+                    results[related_video_id]['comment'] = comment_score
+                    results[related_video_id]['transcript'] = transcript_score
+        return results
+    print("Querying lsh")
+    queried = {}
+    for video in tqdm(videos):
+        related = await get_related_videos(video.id)
+        if related != {}:
+            queried[video.id] = related
+    #print(json.dumps(queried, indent=4))
+    now = datetime.datetime.now()
+    with open(f"{now.strftime('%Y-%m-%d-%H-%M-%S')}.json", "w+") as fp:
+        json.dump(queried, fp)
+    with open(f"{now.strftime('%Y-%m-%d-%H-%M-%S')}.pretty.json", "w+") as fp:
+        fp.write(json.dumps(queried, indent=4))
+    await recommenter.close()
+
 async def testHasKey():
     recommenter = await Recommenter.create()  # type: Recommenter
     ret = await recommenter.transcripts.has_key("Egp4NRhlMDg")
@@ -479,6 +526,7 @@ loop = asyncio.new_event_loop()
 # %%
 # loop.run_until_complete(debugvid())
 #loop.run_until_complete(testHasKey())
-loop.run_until_complete(populateDatabase())
+#loop.run_until_complete(populateDatabase())
 # %%
-#loop.run_until_complete(brutesearch())
+# loop.run_until_complete(brutesearch())
+loop.run_until_complete(reallyBruteSearch())
