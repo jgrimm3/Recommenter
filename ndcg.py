@@ -12,7 +12,7 @@ import numpy as np
 #Pull Excel Sheet
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def pull_excelRanks():
-    wb = load_workbook("NDCG_Rubric2.xlsx")
+    wb = load_workbook("NDCG_Rubric.xlsx")
     sheet = wb.active
     true_scores = []
     true_vids = []
@@ -46,7 +46,7 @@ def calc_NDCG(true_vids, you_vids, rec_vids, true_scores, rec_scores, you_scores
     true_relevance = np.asarray([true_scores])
     youtube_NDCG = ndcg_score(true_relevance, np.asarray([you_scores]), k=5)
     recommenter_NDCG = ndcg_score(true_relevance, np.asarray([rec_scores]), k=5)
-    with open("NDCG2.txt", "w") as result:
+    with open("NDCG.txt", "w") as result:
         print(f"Ground Truth Videos  " + str(true_vids), file=result)
         print(f"Youtube Videos  " + str(you_vids), file=result)
         print(f"Recommenter Videos  " + str(rec_vids), file=result)

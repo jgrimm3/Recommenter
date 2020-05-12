@@ -9,7 +9,7 @@ import json
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #FILL IN API KEY BELOW
-youtube = YoutubeDataApi('AIzaSyBL9Nzzvnwl_xPfXPKOCFTADEuHm70iH74')
+youtube = YoutubeDataApi('')
 youtubeRecommended = []
 recommenterRecommended = []
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,6 +32,7 @@ def recommenterRecommender(ID, listr):
     scores = []
     comment_weight = 0
     trans_weight = 0
+    #Insert JSON FILE NAME HERE
     with open("recommenter_related_0.3.json") as json_file:
         rec_data= json.load(json_file)
         results = rec_data[ID]
@@ -59,7 +60,8 @@ def recommenterRecommender(ID, listr):
 #Fill Excel Sheet
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def fill_Excell(inputURL, youRanks, recRanks):
-    filename = "NDCG_Rubric12.xlsx"
+    #UPDATE FILE name if making several copies
+    filename = "NDCG_Rubric.xlsx"
     workbook = Workbook()
     sheet = workbook.active
     sheet.column_dimensions['A'].width = 60
@@ -84,4 +86,5 @@ def mainInput(inputURL):
     fill_Excell(inputURL, youtubeRecommended, recommenterRecommended)
 
 if __name__ == "__main__":
+    #Update seed video for each run
     mainInput('https://www.youtube.com/watch?v=No8-mBek3rs')
