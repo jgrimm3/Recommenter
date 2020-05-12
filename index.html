@@ -40,9 +40,9 @@ layout: default
 	<li>Developed web crawler to scrape YouTube Comments and Transcripts</li>
 	<li>Made a database of roughly 3000 videos Comments, Transcripts, upload date channel Id and Video Ids available for future work</li>
 	<li>Indexed over 180,000 scored words based on TF-IDF on transcripts and comments</li>
-	<li>Computed minhash with a shingle size of 1 for all 3000 videos comments and transcripts and added the minhash values to Locality Sensitive Hashing Clusters to boost efficiency in comparing hashes for jaccard similarity. </li>
+	<li>Computed minhash with a shingle size of 1, 2, 3, and 4 for all 3000 videos comments and transcripts and added the minhash values to Locality Sensitive Hashing Clusters to boost efficiency in comparing hashes for jaccard similarity. </li>
 	<li>Computed Jaccard Similarities on all 3000 videos</li>
-	<li>Indexed the calculations mentioned above into a MongoDB, so we can query for video and get a JSON output of their Jaccard similarities of Comments and Transcripts </li>
+	<li>Indexed the calculations mentioned above into a MongoDB instance, so we can query for video and get a JSON output of their Jaccard similarities of Comments and Transcripts </li>
 	<li>Weighted comments and transcript similarity the same</li>
 	<li>Implemented an automated user test ranking rubric through excel and automatic NDCG calculations comparing our results and YouTubes results to user generated ground truth.</li>
 	<li>Generated 12 Rubrics to evaluate NDCG and had 4 outside testers help evaluate them</li>
