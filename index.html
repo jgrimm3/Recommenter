@@ -57,7 +57,7 @@ layout: default
 			<li>Processing speed for comments, it took roughly 1 minute per 1000 comments on videos to download, with some videos having well over 50,0000 comments, drastically slowing down data mining efforts.</li>
 			<li>Indexing unique words to build a dictionary for idf weighting took an extremely long time, so having to reindex if changes were made wasted a lot of time.</li>
 			<li>Spelling mistakes in the comments or transcripts caused issues as they were seen as unique words and rated very high by idf ratings, yet were meaningless nonsense. TF weighting and restricting our dictionary to include only words that occurred at least 5 times helped.</li>
-			<li>Our LSH hashes did not work as planned as videos did not end up in buckets with similar videos, and also prevented actually relevant videos from being compared. For our current results we excluded LSH buckets before jaccard similarities</li>
+			<li>Our LSH hashes did not work as planned as videos did not end up in buckets with similar videos, and also prevented actually relevant videos from being compared. For our current results we excluded the LSH stage of the pipeline before computing jaccard similarities. Omitting such a stage is not computationally prohibitive at a scale of 3,000 videos, but would be a necessary component at a larger scale.</li>
 			<li>Transcripts that had no meaning such as [Music] or [Applause] caused videos that weren't related at all to be highly related based on transcript</li>
 		</ul>
 	</li>
@@ -97,6 +97,15 @@ layout: default
 			<li><b> Be sure to change the seed video after each run</b></li>
 			<li>You can change the number of videos to scrape for and the category of videos by changing the <i>Seed</i> and <i>Count</i> variables located on the first two lines of code</li>
 			<li> To change the threshold of comments that are gathered by Utuby (all comments will be retrieved) vs YouTube API (only 100-500 comments will be retrieved)  on line 15 of <i> fetch_comments.py.</i> higher means longer scraping, lower means more chance of rate limit. </li>
+		</ul>
+	</li>
+
+	<li><b>To compute recommendations</b>
+		<ul>
+			<li>It is assumed that you have a MongoDB server available to you. By default the main.py script will use the one locally available on 127.0.0.1:27017</li>
+			<li>You may download the database export linked above and import the databases to your MongoDB server.</li>
+			<li>Given that you have a SQLite 3 database containing scraped videos and comments, you can utilize call the jaccardSimilarity() function of the script in order to run the script which will export a JSON file with recommendations and weights for the comments and transcript components.</li>
+			<li>If you wish to add new videos, assuming you have a SQLite 3 database containing scraped videos and comments, you may call the populateDatabase() function of the main.py script in order to first populate a word frequency index, create and sort shingles, create and store a MinHash representation of the video, and then store it in an LSH cluster.</li>
 		</ul>
 	</li>
 

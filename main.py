@@ -468,7 +468,7 @@ async def brutesearch():
         fp.write(json.dumps(queried, indent=4))
     await recommenter.close()
 
-async def reallyBruteSearch():
+async def jaccardSimilarity():
     recommenter = await Recommenter.create()  # type: Recommenter
     videos = recommenter.readFromSQL("videoInfo4.db")
     minhashes = {}
@@ -529,4 +529,4 @@ loop = asyncio.new_event_loop()
 #loop.run_until_complete(populateDatabase())
 # %%
 # loop.run_until_complete(brutesearch())
-loop.run_until_complete(reallyBruteSearch())
+loop.run_until_complete(jaccardSimilarity())
