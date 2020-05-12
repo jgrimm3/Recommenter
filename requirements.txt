@@ -1,0 +1,12 @@
+google-api-python-client
+youtube-transcript-api
+google-auth-oauthlib
+youtube-data-api
+beautifulsoup4
+scikit-learn
+datasketch
+openpyxl
+pymongo
+utuby
+numpy
+tqdm
