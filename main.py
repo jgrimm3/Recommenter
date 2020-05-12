@@ -1,7 +1,7 @@
 #%%
 import datasketch
 from datasketch.experimental import AsyncMinHashLSH
-from typing import List
+from typing import List, Tuple, Dict
 import math
 import sqlData as sql
 import asyncio
@@ -53,10 +53,6 @@ class LSHWrapper:
         self.lsh = await AsyncMinHashLSH(storage_config={'type': 'aiomongo', 'mongo': {'host': 'localhost', 'port': 27017, 'db': f"lsh_{name}_800"}}, threshold=0.01, num_perm=800)
         return self
 
-    def query_from_video_id(self, video_id: str):
-        # get minhash object
-        pass
-
     async def query_from_minhash_obj(self, mh):
         result = await self.lsh.query(mh)
         return result
@@ -64,6 +60,10 @@ class LSHWrapper:
     async def insert_minhash_obj(self, mh_id, mh):
         print(f"Inserting {mh_id} into LSH {self.name}")
         await self.lsh.insert(mh_id, mh)
+
+    async def has_key(self, key):
+        print(f"Checking to see if {key} in LSH {self.name}")
+        return (await self.lsh.has_key(key))
 
     async def close(self):
         await self.lsh.close()
@@ -136,7 +136,7 @@ class WordFrequency:
         self.unique_doc = await self.misc_collection.find_one({'purpose': 'doc_ids'})
         self.word_entries = dict()
         print("Building word cache...")
-        for entry in (await self.words_collection.find().sort('frequency', -1).to_list(100000)):
+        for entry in (await self.words_collection.find().sort('frequency', -1).to_list(100000)):  # limit not working
             self.word_entries[entry['word']] = entry
         print(f"Number of words in cache {len(self.word_entries)}")
         self.has_cache = True
@@ -151,8 +151,11 @@ class WordFrequency:
                 entry['dirty'] = False
                 operations.append(UpdateOne({'word': entry['word']}, {'$set': entry}, upsert=True))
                 # await self.words_collection.update_one({'word': entry['word']}, {'$set': entry}, upsert=True)
-        print(f"Submitting bulk write request with {len(operations)} update operations...")
-        await self.words_collection.bulk_write(operations, ordered=False)
+        if len(operations) > 0:
+            print(f"Submitting bulk write request with {len(operations)} update operations...")
+            await self.words_collection.bulk_write(operations, ordered=False)
+        else:
+            print("Had no ops to upload")
         print("Deleted word cache")
         print("Updating doc_ids")
         self.words_entries = dict()
@@ -214,21 +217,30 @@ class WordFrequency:
             elif self.type == "mongo":
                 if self.has_cache is False:
                     await self.build_cache()
-                entry = None
-                if word in self.word_entries: # find entry in our cache
-                    entry = self.word_entries[word]
-                else: # find it in our db
-                    entry = await self.words_collection.find_one(filter={'word': word})
-                if entry is not None:
+                # find entry in our cache
+                entry = self.word_entries.get(word, None)
+                if entry is None: # find it in our db
+                    pass # entry = await self.words_collection.find_one(filter={'word': word})
+                if entry is not None and entry['frequency'] > 5:
                     weight += math.log2(
                         len(self.unique_doc['doc_ids'])
                         /
                         len(entry['documents'])
                     )
+                else:
+                    weight += math.log2(
+                        len(self.unique_doc['doc_ids'])
+                        /
+                        10
+                    )
         return weight
 
     async def sort_shingles(self, shingles: List[str]):
-        ret = [(await self.calculate_shingle_weight(shingle), shingle) for shingle in shingles]
+        print(f"Sorting {len(shingles)} shingles")
+        ret = []
+        for shingle in tqdm(shingles):
+            ret.append((await self.calculate_shingle_weight(shingle), shingle))
+        #ret = [(await self.calculate_shingle_weight(shingle), shingle) for shingle in shingles]
         ret = sorted(ret, key=lambda x: x[0], reverse=True)
         ret = [shingle[1] for shingle in ret]
         return ret
@@ -249,6 +261,43 @@ class Recommenter:
         await self.word_frequency.initialize()
         return self
 
+    async def get_related_videos(self, vid_id: str) -> Dict[str, Dict[str, float]]:
+        results = {}  # type: Dict[str, Dict[str, float]]
+        comment_mh_id = f"{vid_id}-comment"
+        print(comment_mh_id)
+        comment_mh = await self.minhash_storage.retrieve_hash(comment_mh_id)
+        print(comment_mh)
+        if comment_mh is not None:
+            related_comments = await self.comments.query_from_minhash_obj(comment_mh)  # type: List[str]
+            # get min hashes for results
+            print(related_comments)
+            for mh_id in related_comments:
+                if mh_id == f"{vid_id}-comment":
+                    continue
+                retrieved = await self.minhash_storage.retrieve_hash(mh_id)
+                if retrieved is not None:
+                    vid_id = mh_id.split('-')[0]
+                    if vid_id not in results:
+                        results[vid_id] = {}
+                    results[vid_id]['comment'] = comment_mh.jaccard(retrieved)
+        transcript_mh_id = f"{vid_id}-transcript"
+        print(transcript_mh_id)
+        transcript_mh = await self.minhash_storage.retrieve_hash(transcript_mh_id)
+        print(transcript_mh)
+        if transcript_mh is not None:
+            related_transcripts = await self.transcripts.query_from_minhash_obj(transcript_mh)  # type: List[str]
+            print(related_transcripts)
+            for mh_id in related_transcripts:
+                if mh_id == f"{vid_id}-transcript":
+                    continue
+                retrieved = await self.minhash_storage.retrieve_hash(mh_id)
+                if retrieved is not None:
+                    vid_id = mh_id.split('-')[0]
+                    if vid_id not in results:
+                        results[vid_id] = {}
+                    results[vid_id]['transcript'] = transcript_mh.jaccard(retrieved)
+        return results
+
     def readFromSQL(self, sqlitedb_path: str) -> List[VideoFromDB]:
         con = sql.connect_db(sqlitedb_path)
         videos = sql.get_all_videos(con)
@@ -265,11 +314,10 @@ class Recommenter:
         await self.transcripts.close()
         await self.word_frequency.upload_cache()
 
-# %%
 
 async def populateDatabase():
     recommenter = await Recommenter.create()  # type: Recommenter
-    videos = recommenter.readFromSQL("videoInfo3.db")[:1000]
+    videos = recommenter.readFromSQL("videoInfo4.db")
     """
     i = 0
     for video in videos:
@@ -282,54 +330,91 @@ async def populateDatabase():
             for word in tqdm(' '.join([video.comment_content, video.transcript_content]).split(' ')):
                 await recommenter.word_frequency.add_to_index(word, video.id)
             await recommenter.word_frequency.add_doc_id(video.id)
-            if i == 5:
+            if i == 10:
                 await recommenter.word_frequency.upload_cache()
                 i = -1
             i += 1
+    
     """
-
     for video in videos:
+        if video.id in ["5DGwOJXSxqg", "mWXurqWRA74", "jkGtMjkkmn4", "cqkiim_K0sc", "Ft00DUHRCOo", "FtX_oGO9MHo"]:
+            print(f"Skipping {video.id} as its on the blacklist")
+            continue
         if video.has_enough_comments():
+            minhash_id = f"{video.id}-comment"
+            if (await recommenter.retrieve_minhash(minhash_id)) != None:
+                print(f"Skipping video {video.id} because comment minhash stored, presumed already indexed")
+                continue # skip video
             print(f"Generating comment minhash for {video.id}")
             shingles = w_shingle(video.comment_content, SHINGLE_SIZE_COMMENTS)
             minhash = datasketch.MinHash(num_perm=800)
-            for shingle in (await recommenter.word_frequency.sort_shingles(shingles))[:800]:
+            rated_shingles = await recommenter.word_frequency.sort_shingles(shingles)
+            print(f"Top 4 comment shingles for {video.id} are {rated_shingles[:4]}")
+            for shingle in rated_shingles[:800]:
                 minhash.update(shingle.encode('utf8'))
-            minhash_id = f"{video.id}-comment"
+            print(f"Storing minhash {minhash_id}")
             await recommenter.store_minhash(minhash_id, minhash)
+            print(f"Inserting minhash {minhash_id}")
             await recommenter.comments.insert_minhash_obj(minhash_id, minhash)
         if video.has_enough_transcripts():
+            minhash_id = f"{video.id}-transcript"
+            if (await recommenter.retrieve_minhash(minhash_id)) != None:
+                print(f"Skipping video {video.id} because transcript minhash stored, presumed already indexed.")
+                continue # skip video
             print(f"Generating transcript minhash for {video.id}")
             shingles = w_shingle(video.transcript_content, SHINGLE_SIZE_TRANSCRIPT)
             minhash = datasketch.MinHash(num_perm=800)
-            for shingle in (await recommenter.word_frequency.sort_shingles(shingles))[:800]:
+            rated_shingles = await recommenter.word_frequency.sort_shingles(shingles)
+            print(f"Top 4 transcript shingles for {video.id} are {rated_shingles[:4]}")
+            for shingle in rated_shingles[:800]:
                 minhash.update(shingle.encode('utf8'))
-            minhash_id = f"{video.id}-transcript"
+            print(f"Storing minhash {minhash_id}")
             await recommenter.store_minhash(minhash_id, minhash)
+            print(f"Inserting minhash {minhash_id}")
             await recommenter.transcripts.insert_minhash_obj(minhash_id, minhash)
 
     await recommenter.close()
 
-# %%
-async def queryDatabase():
+async def debugvid():
     recommenter = await Recommenter.create()  # type: Recommenter
     videos = recommenter.readFromSQL("videoInfo3.db")[:1000]
     for video in videos:
-        test_minhash = recommenter.retrieve_minhash(f"{video.id}-comment")
-        query_results = await recommenter.comments.query_from_minhash_obj(test_minhash)
-        print("comments", video.id, query_results)
-        test_minhash = recommenter.retrieve_minhash(f"{video.id}-transcript")
-        query_results = await recommenter.transcripts.query_from_minhash_obj(test_minhash)
-        # if len(query_results) > 0:
-        print("transcripts", video.id, query_results)
+        if video.id in ["5DGwOJXSxqg", "mWXurqWRA74"]:
+            print(f"Generating comment minhash for {video.id}")
+            shingles = w_shingle(video.comment_content, SHINGLE_SIZE_COMMENTS)
+            minhash = datasketch.MinHash(num_perm=800)
+            rated_shingles = await recommenter.word_frequency.sort_shingles(shingles)
+            print(f"Top 4 comment shingles for {video.id} are {rated_shingles[:4]}")
+            for shingle in rated_shingles[:800]:
+                minhash.update(shingle.encode('utf8'))
+            minhash_id = f"{video.id}-comment"
+            print(f"Storing minhash {minhash_id}")
+            await recommenter.store_minhash(minhash_id, minhash)
+            print(f"Inserting minhash {minhash_id}")
+            await recommenter.comments.insert_minhash_obj(minhash_id, minhash)
+
+
+async def queryDatabase():
+    recommenter = await Recommenter.create()  # type: Recommenter
+    videos = recommenter.readFromSQL("videoInfo4.db")
+    print(len(videos))
+    #results = await recommenter.get_related_videos('Egp4NRhlMDg')
+    #print(results)
+    await recommenter.close()
+
+async def testHasKey():
+    recommenter = await Recommenter.create()  # type: Recommenter
+    ret = await recommenter.transcripts.has_key("Egp4NRhlMDg")
+    print(ret)
     await recommenter.close()
 
 # %%
-minhash_storage = dict()  # Global Variable
 
 # %%
 loop = asyncio.new_event_loop()
 # %%
+# loop.run_until_complete(debugvid())
+#loop.run_until_complete(testHasKey())
 loop.run_until_complete(populateDatabase())
 # %%
-loop.run_until_complete(queryDatabase())
+# loop.run_until_complete(queryDatabase())
