@@ -13,7 +13,7 @@ layout: default
 	<li> <a href = https://drive.google.com/open?id=1iWc9jgxQbUZo-QDcY16dVtEyApXZOWfWqghbdWjLXv0> Proposal Presentation </a></li>
 	<li> <a href = https://github.com/jgrimm3/Recommenter> Git Repository</a></li>
 	<li> <a href = https://drive.google.com/open?id=1LfZWEn3WGlUfUuI6as9qKxZeETNNzpA8> Video Comment & Transcript Database</a></li>
-	<li> <a href = https://drive.google.com/open?id=13Pus9wLQ0FtXDz6jCRb8usKRjOV6DUZa>Jaccard Similarity JSON"</a></li>
+	<li> <a href = https://drive.google.com/open?id=13Pus9wLQ0FtXDz6jCRb8usKRjOV6DUZa>Jaccard Similarity JSON</a></li>
 	<li> <a href = https://drive.google.com/drive/folders/1eeonxwA0AvI_2JBx4GwR25xeCTkUemQe?usp=sharing>NDCG Evaluation Rubrics</a></li>
 	<li> <a href = https://drive.google.com/drive/folders/1GxRAgPyrJFjWha1u1MVUfadw4ArEZzSe?usp=sharing>NDCG Evaluation Results</a></li>
 
@@ -32,7 +32,7 @@ layout: default
 <h4> Research Conclusions</h4>
 <p>We successfully can recommend videos solely based off of comments and transcripts</p>
 <p>Being able to recommend videos only based off of comments and transcripts avoids any biases toward the user demographics, location, and items they may not be interested in compared to other users. It also avoids content creators from being able to bias their material to be recommended more by adding inaccurate tags. Instead every YouTube channel gains a fair chance of being recommended only based on their videos content and how people react to it.</p>
-<p>Our recommendations compared to user generated ground truth had an NDCG score of UPDATE while YouTube scored UPDATE</p>
+<p>Our recommendations compared to user generated ground truth had an NDCG score of 0.978 while YouTube scored 0.970</p>
 <p>The system was much harder to scale than we anticipated. Gathering video metadata is plausible, however our limited computer resources and time were not enough to generate the scale we anticipated. However once video metadata is extracted and hashing calculations are performed, the system performs well during run time of fetching related videos, relying on query speed of the MongoDB</p>
 
 <h4> Accomplishments</h4>
@@ -40,9 +40,9 @@ layout: default
 	<li>Developed web crawler to scrape YouTube Comments and Transcripts</li>
 	<li>Made a database of roughly 3000 videos Comments, Transcripts, upload date channel Id and Video Ids available for future work</li>
 	<li>Indexed over 180,000 scored words based on TF-IDF on transcripts and comments</li>
-	<li>Computed minhash with a shingle size of 1 for all 3000 videos comments and transcripts and added the minhash values to Locality Sensitive Hashing Clusters to boost efficiency in comparing hashes for jaccard similarity. </li>
+	<li>Computed minhash with a shingle size of 1, 2, 3, and 4 for all 3000 videos comments and transcripts and added the minhash values to Locality Sensitive Hashing Clusters to boost efficiency in comparing hashes for jaccard similarity. </li>
 	<li>Computed Jaccard Similarities on all 3000 videos</li>
-	<li>Indexed the calculations mentioned above into a MongoDB, so we can query for video and get a JSON output of their Jaccard similarities of Comments and Transcripts </li>
+	<li>Indexed the calculations mentioned above into a MongoDB instance, so we can query for video and get a JSON output of their Jaccard similarities of Comments and Transcripts </li>
 	<li>Weighted comments and transcript similarity the same</li>
 	<li>Implemented an automated user test ranking rubric through excel and automatic NDCG calculations comparing our results and YouTubes results to user generated ground truth.</li>
 	<li>Generated 12 Rubrics to evaluate NDCG and had 4 outside testers help evaluate them</li>
