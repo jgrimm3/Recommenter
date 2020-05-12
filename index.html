@@ -85,6 +85,7 @@ layout: default
 	<li><b> To gather YouTube video comments and transcripts</b>
 		<ul>
 			<li>Everything needed to gather new comments and transcripts are stored in the <i> Video Database Generation </i> Folder. Make that folder your working directory with all dependencies installed.</li>
+			<li>You will need a google API key For YouTube API v3 in order to run, please put the key on line 30 of <i>DataScraper.py</i></li>
 			<li>Download the "Video and Comment Database" found on this web-page and insure videoInfo.db is in the working directory locally.</li>
 			<li> If you'd rather create an empty database and start fresh, the functions to create a new database and table layouts are available in SQL.py to run from command line. Please read the file for more info</li>
 			<li>Run <i> DataScraper.py</i></li>
@@ -97,6 +98,7 @@ layout: default
 
 	<li><b>To evaluate NDCG</b>
 		<ul>
+			<li>You will once again need to place a YouTube API v3 key on line 14 of <i>createRubric.py</i></li>
 			<li> Run <i>createRubric.py</i> with (url to the starting Youtube video) . </li>
 			<li> This will generate an excel file populated with 10 links from YouTube recommendations and 10 links from Recommenter recommendations.</li>
 			<li> A user will numerically rank in column b from 1-5 their interpretation of how similar the videos are to the input video.</li>
