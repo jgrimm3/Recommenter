@@ -9,9 +9,11 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from tqdm import tqdm
 from pymongo import UpdateOne
 import base64
+import json
+import datetime
 
 SHINGLE_SIZE_COMMENTS = 2
-SHINGLE_SIZE_TRANSCRIPT = 4
+SHINGLE_SIZE_TRANSCRIPT = 2
 
 def w_shingle(string, w):
     """Return (now a string) of the set of contiguous sequences (shingles) of `w` words
@@ -35,10 +37,10 @@ class VideoFromDB:
         self.transcript_content = rows[3]
 
     def has_enough_comments(self) -> bool:
-        return len(self.comment_content.split(' ')) >= SHINGLE_SIZE_COMMENTS
+        return len(self.comment_content.split(' ')) >= (SHINGLE_SIZE_COMMENTS + 2)
 
     def has_enough_transcripts(self) -> bool:
-        return len(self.transcript_content.split(' ')) >= SHINGLE_SIZE_TRANSCRIPT
+        return len(self.transcript_content.split(' ')) >= (SHINGLE_SIZE_TRANSCRIPT + 2)
 
 class LSHWrapper:
 
@@ -50,7 +52,7 @@ class LSHWrapper:
     @classmethod
     async def create(cls, name: str) -> 'LSHWrapper':
         self = LSHWrapper(name)
-        self.lsh = await AsyncMinHashLSH(storage_config={'type': 'aiomongo', 'mongo': {'host': 'localhost', 'port': 27017, 'db': f"lsh_{name}_800"}}, threshold=0.01, num_perm=800)
+        self.lsh = await AsyncMinHashLSH(storage_config={'type': 'aiomongo', 'mongo': {'host': '127.0.0.1', 'port': 27017, 'db': f"lsh_{name}_800_w2"}}, threshold=0.01, num_perm=800)
         return self
 
     async def query_from_minhash_obj(self, mh):
@@ -71,8 +73,8 @@ class LSHWrapper:
 
 class MinHashStorage:
     def __init__(self):
-        self.client = AsyncIOMotorClient('localhost', 27017)
-        self.db = self.client.get_database('min_hash_storage')
+        self.client = AsyncIOMotorClient('127.0.0.1', 27017)
+        self.db = self.client.get_database('min_hash_storage_w2')
         self.hashes_collection = self.db.get_collection('hashes')
         pass
 
@@ -119,7 +121,7 @@ class WordFrequency:
             self.index = dict()
             self.document_ids = set()
         elif self.type == "mongo":
-            self.client = AsyncIOMotorClient('localhost', 27017)
+            self.client = AsyncIOMotorClient('127.0.0.1', 27017)
             self.db = self.client.get_database('word_frequency')
             self.words_collection = self.db.get_collection('words')
             self.misc_collection = self.db.get_collection('misc')
@@ -136,7 +138,7 @@ class WordFrequency:
         self.unique_doc = await self.misc_collection.find_one({'purpose': 'doc_ids'})
         self.word_entries = dict()
         print("Building word cache...")
-        for entry in (await self.words_collection.find().sort('frequency', -1).to_list(100000)):  # limit not working
+        for entry in (await self.words_collection.find().to_list(100000)):  # limit not working
             self.word_entries[entry['word']] = entry
         print(f"Number of words in cache {len(self.word_entries)}")
         self.has_cache = True
@@ -221,18 +223,19 @@ class WordFrequency:
                 entry = self.word_entries.get(word, None)
                 if entry is None: # find it in our db
                     pass # entry = await self.words_collection.find_one(filter={'word': word})
-                if entry is not None and entry['frequency'] > 5:
+                if entry is not None and entry['frequency'] > 1:
                     weight += math.log2(
                         len(self.unique_doc['doc_ids'])
                         /
                         len(entry['documents'])
                     )
                 else:
-                    weight += math.log2(
-                        len(self.unique_doc['doc_ids'])
-                        /
-                        10
-                    )
+                    pass
+                    #weight += math.log2(
+                    #    len(self.unique_doc['doc_ids'])
+                    #    /
+                    #    10
+                    #)
         return weight
 
     async def sort_shingles(self, shingles: List[str]):
@@ -264,13 +267,11 @@ class Recommenter:
     async def get_related_videos(self, vid_id: str) -> Dict[str, Dict[str, float]]:
         results = {}  # type: Dict[str, Dict[str, float]]
         comment_mh_id = f"{vid_id}-comment"
-        print(comment_mh_id)
         comment_mh = await self.minhash_storage.retrieve_hash(comment_mh_id)
-        print(comment_mh)
         if comment_mh is not None:
             related_comments = await self.comments.query_from_minhash_obj(comment_mh)  # type: List[str]
             # get min hashes for results
-            print(related_comments)
+            # print(related_comments)
             for mh_id in related_comments:
                 if mh_id == f"{vid_id}-comment":
                     continue
@@ -281,9 +282,7 @@ class Recommenter:
                         results[vid_id] = {}
                     results[vid_id]['comment'] = comment_mh.jaccard(retrieved)
         transcript_mh_id = f"{vid_id}-transcript"
-        print(transcript_mh_id)
         transcript_mh = await self.minhash_storage.retrieve_hash(transcript_mh_id)
-        print(transcript_mh)
         if transcript_mh is not None:
             related_transcripts = await self.transcripts.query_from_minhash_obj(transcript_mh)  # type: List[str]
             print(related_transcripts)
@@ -296,6 +295,8 @@ class Recommenter:
                     if vid_id not in results:
                         results[vid_id] = {}
                     results[vid_id]['transcript'] = transcript_mh.jaccard(retrieved)
+        if comment_mh is None and transcript_mh is None:
+            print(f"Sorry, did not have {vid_id} in the system.")
         return results
 
     def readFromSQL(self, sqlitedb_path: str) -> List[VideoFromDB]:
@@ -318,6 +319,7 @@ class Recommenter:
 async def populateDatabase():
     recommenter = await Recommenter.create()  # type: Recommenter
     videos = recommenter.readFromSQL("videoInfo4.db")
+
     """
     i = 0
     for video in videos:
@@ -354,8 +356,8 @@ async def populateDatabase():
                 minhash.update(shingle.encode('utf8'))
             print(f"Storing minhash {minhash_id}")
             await recommenter.store_minhash(minhash_id, minhash)
-            print(f"Inserting minhash {minhash_id}")
-            await recommenter.comments.insert_minhash_obj(minhash_id, minhash)
+            #print(f"Inserting minhash {minhash_id}")
+            #await recommenter.comments.insert_minhash_obj(minhash_id, minhash)
         if video.has_enough_transcripts():
             minhash_id = f"{video.id}-transcript"
             if (await recommenter.retrieve_minhash(minhash_id)) != None:
@@ -370,8 +372,8 @@ async def populateDatabase():
                 minhash.update(shingle.encode('utf8'))
             print(f"Storing minhash {minhash_id}")
             await recommenter.store_minhash(minhash_id, minhash)
-            print(f"Inserting minhash {minhash_id}")
-            await recommenter.transcripts.insert_minhash_obj(minhash_id, minhash)
+            #print(f"Inserting minhash {minhash_id}")
+            #await recommenter.transcripts.insert_minhash_obj(minhash_id, minhash)
 
     await recommenter.close()
 
@@ -397,9 +399,71 @@ async def debugvid():
 async def queryDatabase():
     recommenter = await Recommenter.create()  # type: Recommenter
     videos = recommenter.readFromSQL("videoInfo4.db")
-    print(len(videos))
-    #results = await recommenter.get_related_videos('Egp4NRhlMDg')
-    #print(results)
+    """
+    for video in videos:
+        results = await recommenter.get_related_videos(video.id)
+        if len(results) > 0:
+            print(f"Queried {video.id}")
+            print(results)
+    """
+    # results = await recommenter.get_related_videos("p40OetppIDg")
+    # print(results)
+    mh1 = await recommenter.retrieve_minhash("p40OetppIDg-transcript")
+    print(await recommenter.transcripts.lsh.query(mh1))
+    #mh2 = await recommenter.retrieve_minhash("RoompSKVq6w-transcript")
+    #print(mh1.jaccard(mh2))
+    await recommenter.close()
+
+async def brutesearch():
+    recommenter = await Recommenter.create()  # type: Recommenter
+    videos = recommenter.readFromSQL("videoInfo4.db")
+    minhashes = {}
+    comment_lsh = datasketch.MinHashLSH(threshold=0.7, num_perm=800)
+    transcript_lsh = datasketch.MinHashLSH(threshold=0.7, num_perm=800)
+    print("Adding videos to lsh")
+    for video in tqdm(videos):
+        comment_mh = await recommenter.retrieve_minhash(f"{video.id}-comment")
+        transcript_mh = await recommenter.retrieve_minhash(f"{video.id}-transcript")
+        if comment_mh is not None:
+            minhashes[f"{video.id}-comment"] = comment_mh
+            comment_lsh.insert(f"{video.id}-comment", comment_mh)
+        if transcript_mh is not None:
+            minhashes[f"{video.id}-transcript"] = transcript_mh
+            transcript_lsh.insert(f"{video.id}-transcript", transcript_mh)
+    async def get_related_videos(vid_id: str) -> Dict[str, Dict[str, float]]:
+        results = {}  # type: Dict[str, Dict[str, float]]
+        comment_mh_id = f"{vid_id}-comment"
+        comment_mh = minhashes.get(comment_mh_id, None)
+        transcript_mh_id = f"{vid_id}-transcript"
+        transcript_mh = minhashes.get(transcript_mh_id, None)
+        related_mh_ids = []  # type: List[str]
+        if comment_mh is not None:
+            related_mh_ids = related_mh_ids + comment_lsh.query(comment_mh)
+        if transcript_mh is not None:
+            related_mh_ids = related_mh_ids + transcript_lsh.query(transcript_mh)
+        related_video_ids = list(set([mh_id.split('-')[0] for mh_id in related_mh_ids if mh_id != comment_mh_id and mh_id != transcript_mh_id]))
+        for related_video_id in related_video_ids:
+            related_comment_mh = minhashes.get(f"{related_video_id}-comment", None)
+            related_transcript_mh = minhashes.get(f"{related_video_id}-transcript", None)
+            if related_comment_mh is not None:
+                if related_video_id not in results:
+                    results[related_video_id] = {}
+                results[related_video_id]['comment'] = comment_mh.jaccard(related_comment_mh)
+            if related_transcript_mh is not None:
+                if related_video_id not in results:
+                    results[related_video_id] = {}
+                results[related_video_id]['transcript'] = transcript_mh.jaccard(related_transcript_mh)
+        return results
+    print("Querying lsh")
+    queried = {}
+    for video in tqdm(videos):
+        related = await get_related_videos(video.id)
+        if related != {}:
+            queried[video.id] = related
+    #print(json.dumps(queried, indent=4))
+    now = datetime.datetime.now()
+    with open(f"{now.strftime('%Y-%m-%d-%H-%M-%S')}.json", "w+") as fp:
+        fp.write(json.dumps(queried, indent=4))
     await recommenter.close()
 
 async def testHasKey():
@@ -417,4 +481,4 @@ loop = asyncio.new_event_loop()
 #loop.run_until_complete(testHasKey())
 loop.run_until_complete(populateDatabase())
 # %%
-# loop.run_until_complete(queryDatabase())
+#loop.run_until_complete(brutesearch())
